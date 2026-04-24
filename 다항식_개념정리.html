@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>지원이의 다항식 완벽 정리</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  background: #f0f4f8; color: #2d3748; line-height: 1.8;
+}
+.container { max-width: 900px; margin: 0 auto; padding: 20px; }
+header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white; text-align: center; padding: 40px 20px; border-radius: 16px;
+  margin-bottom: 30px; box-shadow: 0 10px 30px rgba(102,126,234,0.3);
+}
+header h1 { font-size: 2.2em; margin-bottom: 10px; }
+header p { font-size: 1.1em; opacity: 0.9; }
+
+/* 네비게이션 */
+.nav {
+  background: white; border-radius: 12px; padding: 20px; margin-bottom: 30px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+.nav h3 { color: #667eea; margin-bottom: 12px; font-size: 1.2em; }
+.nav ul { list-style: none; }
+.nav li { margin: 6px 0; }
+.nav a {
+  color: #4a5568; text-decoration: none; padding: 4px 8px; border-radius: 6px;
+  transition: all 0.2s;
+}
+.nav a:hover { background: #edf2f7; color: #667eea; }
+
+/* 단원 헤더 */
+.chapter {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  color: #1a4731; padding: 24px 30px; border-radius: 12px;
+  margin: 40px 0 20px; font-size: 1.5em; font-weight: 700;
+  box-shadow: 0 4px 15px rgba(67,233,123,0.3);
+}
+.chapter.ch2 { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: #5a1a2a; }
+.chapter.ch3 { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); color: #3d1f5c; }
+
+/* 개념 섹션 */
+.concept {
+  background: white; border-radius: 12px; padding: 28px; margin-bottom: 24px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06); border-left: 5px solid #667eea;
+}
+.concept h2 {
+  color: #667eea; font-size: 1.4em; margin-bottom: 16px;
+  padding-bottom: 10px; border-bottom: 2px dashed #e2e8f0;
+}
+.concept h3 { color: #4a5568; font-size: 1.15em; margin: 18px 0 10px; }
+
+/* 비유 박스 (쉬운 설명) */
+.analogy {
+  background: #fffbeb; border: 2px solid #f6e05e; border-radius: 10px;
+  padding: 18px 20px; margin: 16px 0; position: relative;
+}
+.analogy::before {
+  content: '지원아, 이렇게 생각해봐!'; position: absolute; top: -12px; left: 16px;
+  background: #f6e05e; color: #744210; padding: 2px 12px; border-radius: 20px;
+  font-size: 0.85em; font-weight: 700;
+}
+
+/* 공식 박스 */
+.formula-box {
+  background: linear-gradient(135deg, #ebf4ff 0%, #f0e7ff 100%);
+  border: 2px solid #b794f4; border-radius: 10px; padding: 20px;
+  margin: 16px 0; text-align: center;
+}
+.formula-box h4 { color: #553c9a; margin-bottom: 10px; }
+
+/* 예제 */
+.example {
+  background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 10px;
+  padding: 20px; margin: 16px 0;
+}
+.example h4 {
+  color: #2b6cb0; margin-bottom: 10px; font-size: 1.05em;
+  display: flex; align-items: center; gap: 8px;
+}
+.example h4::before {
+  content: 'Q'; background: #3182ce; color: white; width: 28px; height: 28px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 0.9em; font-weight: 700; flex-shrink: 0;
+}
+
+/* 풀이 (접기/펼치기) */
+.solution { margin-top: 12px; }
+.solution summary {
+  background: #edf2f7; padding: 10px 16px; border-radius: 8px; cursor: pointer;
+  font-weight: 600; color: #4a5568; transition: background 0.2s; list-style: none;
+}
+.solution summary:hover { background: #e2e8f0; }
+.solution summary::before { content: '풀이 보기 (먼저 풀어보고 클릭!) '; }
+.solution[open] summary::before { content: '풀이 접기 '; }
+.solution .sol-content {
+  padding: 16px; background: #fafafa; border-radius: 0 0 8px 8px;
+  border: 1px solid #e2e8f0; border-top: none; margin-top: -4px;
+}
+.step { margin: 8px 0; padding-left: 12px; border-left: 3px solid #cbd5e0; }
+.answer {
+  background: #ebf8ff; border: 1px solid #90cdf4; border-radius: 8px;
+  padding: 10px 16px; margin-top: 12px; font-weight: 600; color: #2b6cb0;
+}
+
+/* 팁 */
+.tip {
+  background: #f0fff4; border: 1px solid #9ae6b4; border-radius: 10px;
+  padding: 16px 20px; margin: 16px 0; position: relative;
+}
+.tip::before {
+  content: '지원이만의 꿀팁!'; position: absolute; top: -10px; left: 16px;
+  background: #38a169; color: white; padding: 2px 12px; border-radius: 20px;
+  font-size: 0.8em; font-weight: 700;
+}
+
+/* 구분선 */
+hr { border: none; border-top: 2px dashed #e2e8f0; margin: 30px 0; }
+
+/* 반응형 */
+@media (max-width: 600px) {
+  .container { padding: 12px; }
+  header h1 { font-size: 1.6em; }
+  .concept { padding: 18px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>지원이의 다항식 완벽 정리</h1>
+  <p>지원아, 이 교재만 읽으면 다항식은 걱정 없어! 천천히 따라와 봐~</p>
+</header>
+
+<!-- 목차 -->
+<div class="nav" id="top">
+  <h3>목차 - 지원이의 학습 로드맵</h3>
+  <ul>
+    <li><a href="#s1">1단원: 다항식의 연산</a></li>
+    <li>&nbsp;&nbsp;<a href="#s1-1">1-1. 다항식의 정리</a></li>
+    <li>&nbsp;&nbsp;<a href="#s1-2">1-2. 다항식의 덧셈과 뺄셈</a></li>
+    <li>&nbsp;&nbsp;<a href="#s1-3">1-3. 다항식의 곱셈</a></li>
+    <li>&nbsp;&nbsp;<a href="#s1-4">1-4. 곱셈 공식 (1) &amp; (2)</a></li>
+    <li>&nbsp;&nbsp;<a href="#s1-5">1-5. 다항식의 나눗셈</a></li>
+    <li>&nbsp;&nbsp;<a href="#s1-6">1-6. 조립제법</a></li>
+    <li><a href="#s2">2단원: 항등식과 나머지정리</a></li>
+    <li>&nbsp;&nbsp;<a href="#s2-1">2-1. 항등식과 미정계수법</a></li>
+    <li>&nbsp;&nbsp;<a href="#s2-2">2-2. 나머지정리</a></li>
+    <li>&nbsp;&nbsp;<a href="#s2-3">2-3. 인수정리</a></li>
+    <li><a href="#s3">3단원: 인수분해</a></li>
+    <li>&nbsp;&nbsp;<a href="#s3-1">3-1. 인수분해 공식</a></li>
+    <li>&nbsp;&nbsp;<a href="#s3-2">3-2. 인수정리를 이용한 인수분해</a></li>
+    <li><a href="#review">종합 복습 문제</a></li>
+  </ul>
+</div>
+
+<!-- ===================== 1단원 ===================== -->
+<div class="chapter" id="s1">1단원: 다항식의 연산</div>
+
+<!-- 1-1 다항식의 정리 -->
+<div class="concept" id="s1-1">
+  <h2>1-1. 다항식의 정리</h2>
+
+  <div class="analogy">
+    <br>
+    지원아, 체육시간에 키 순서대로 줄 서본 적 있지?<br>
+    키 큰 친구부터 앞에 세우면 누가 어디 있는지 한눈에 보이잖아.<br>
+    다항식도 똑같아! 차수(거듭제곱의 크기)가 큰 것부터 순서대로 세워주면 계산할 때 훨씬 편해져.
+  </div>
+
+  <h3>핵심 개념</h3>
+  <p><b>내림차순</b>: 차수가 높은 항부터 낮은 항 순서 (큰 것 → 작은 것)</p>
+  <p><b>오름차순</b>: 차수가 낮은 항부터 높은 항 순서 (작은 것 → 큰 것)</p>
+  <p>지원아, 예를 들어 $3x^2 + 1 + x^3 + 2x$를 정리하면:</p>
+  <ul>
+    <li>내림차순: $x^3 + 3x^2 + 2x + 1$ (3차 → 2차 → 1차 → 0차)</li>
+    <li>오름차순: $1 + 2x + 3x^2 + x^3$ (0차 → 1차 → 2차 → 3차)</li>
+  </ul>
+
+  <div class="tip">
+    <br>
+    지원아, 상수항(숫자만 있는 항, 예: 5, -3)의 차수는 <b>0</b>이라고 생각하면 돼!<br>
+    시험에서 내림차순으로 정리하라고 하면, 상수항을 맨 뒤에 쓰면 되는 거야.
+  </div>
+
+  <div class="example">
+    <h4>문제 1: 다음 다항식을 $x$에 대하여 내림차순으로 정리하시오.</h4>
+    <p>(1) $2x^2 + 3x + 1 + x^3$</p>
+    <p>(2) $xy + 5x + 2y^3 - x^2y - 2y + 1$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p><b>(1)</b> 지원아, $x$의 차수가 큰 것부터 세워보자:</p>
+        <div class="step">
+          $x^3$은 3차, $2x^2$은 2차, $3x$는 1차, $1$은 0차<br>
+          따라서: $x^3 + 2x^2 + 3x + 1$
+        </div>
+        <p><b>(2)</b> 지원아, 이건 $x$와 $y$가 섞여 있으니까 "$x$에 대해서만" 차수를 봐야 해!</p>
+        <div class="step">
+          $-x^2y$는 $x$에 대해 2차<br>
+          $xy, 5x$는 $x$에 대해 1차<br>
+          $2y^3, -2y, 1$은 $x$가 없으니까 $x$에 대해 0차<br>
+          같은 차수끼리 묶으면:<br>
+          $-x^2y + (y+5)x + (2y^3 - 2y + 1)$
+        </div>
+        <div class="answer">답: (1) $x^3+2x^2+3x+1$ &nbsp; (2) $-x^2y+(y+5)x+2y^3-2y+1$</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- 1-2 덧셈과 뺄셈 -->
+<div class="concept" id="s1-2">
+  <h2>1-2. 다항식의 덧셈과 뺄셈</h2>
+
+  <div class="analogy">
+    <br>
+    지원아, 과일 정리를 생각해봐!<br>
+    사과 3개 + 사과 5개 = 사과 8개 (같은 과일끼리 합치기 가능!)<br>
+    사과 3개 + 바나나 5개 = ? (다른 과일은 합칠 수 없어!)<br><br>
+    다항식도 똑같아. <b>동류항</b>(같은 문자, 같은 차수)끼리만 더하거나 뺄 수 있어.<br>
+    $3x^2 + 5x^2 = 8x^2$ (같은 종류니까 OK!)<br>
+    $3x^2 + 5x$ = 합칠 수 없음 (차수가 다르니까!)
+  </div>
+
+  <h3>핵심 규칙</h3>
+  <p><b>덧셈</b>: 동류항끼리 모아서 계수를 더한다.</p>
+  <p><b>뺄셈</b>: 빼는 식의 각 항의 부호를 바꿔서 더한다. → $A - B = A + (-B)$</p>
+
+  <div class="formula-box">
+    <h4>다항식의 덧셈에 대한 성질</h4>
+    <p>교환법칙: $A + B = B + A$</p>
+    <p>결합법칙: $(A + B) + C = A + (B + C)$</p>
+  </div>
+
+  <div class="example">
+    <h4>예제 1: 두 다항식 $A = x^3 - 2x^2 + 1$, $B = -2x^3 - 3x + 5$일 때</h4>
+    <p>(1) $A + B$ &nbsp;&nbsp; (2) $A - B$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p><b>(1) $A+B$</b> - 지원아, 같은 종류끼리 짝을 지어주자!</p>
+        <div class="step">
+          $= (x^3 - 2x^2 + 1) + (-2x^3 - 3x + 5)$<br>
+          $x^3$ 끼리: $1 + (-2) = -1$ → $-x^3$<br>
+          $x^2$ 끼리: $-2$ (B에는 $x^2$이 없으니 그대로) → $-2x^2$<br>
+          $x$ 끼리: $-3$ (A에는 $x$가 없으니 그대로) → $-3x$<br>
+          상수끼리: $1 + 5 = 6$<br>
+          $= -x^3 - 2x^2 - 3x + 6$
+        </div>
+        <p><b>(2) $A-B$</b> - 지원아, 뺄셈은 B의 부호를 모두 뒤집어서 더하는 거야!</p>
+        <div class="step">
+          $-B = +2x^3 + 3x - 5$ (부호 뒤집기!)<br>
+          $A + (-B) = (x^3 - 2x^2 + 1) + (2x^3 + 3x - 5)$<br>
+          $= 3x^3 - 2x^2 + 3x - 4$
+        </div>
+        <div class="answer">답: (1) $-x^3-2x^2-3x+6$ &nbsp; (2) $3x^3-2x^2+3x-4$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 2: 두 다항식 $A$, $B$가 다음과 같을 때, $A+B$와 $A-B$를 계산하시오.</h4>
+    <p>(1) $A = x^3 + 3x^2 - 2x + 1$, $B = 2x^3 + 5x$</p>
+    <p>(2) $A = 2x^2 - xy + 2y^2$, $B = x^2 - 3xy - 2y^2$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p><b>(1)</b> 지원아, 동류항끼리 짝지어서 계산해봐!</p>
+        <div class="step">
+          $A+B = 3x^3 + 3x^2 + 3x + 1$<br>
+          $A-B = -x^3 + 3x^2 - 7x + 1$
+        </div>
+        <p><b>(2)</b></p>
+        <div class="step">
+          $A+B = 3x^2 - 4xy$<br>
+          $A-B = x^2 + 2xy + 4y^2$
+        </div>
+        <div class="answer">답: (1) $A+B=3x^3+3x^2+3x+1$, $A-B=-x^3+3x^2-7x+1$<br>
+        (2) $A+B=3x^2-4xy$, $A-B=x^2+2xy+4y^2$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>예제 2: $A = x^3+x^2+1$, $B = 3x^3 - x^2 + 2x + 4$일 때, $(2A+3B)+(A-4B)$를 계산하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 이런 복잡한 식은 <b>먼저 정리</b>하고 나서 대입하는 게 훨씬 쉬워!</p>
+        <div class="step">
+          먼저 괄호를 풀어서 정리하면:<br>
+          $(2A+3B)+(A-4B) = 2A+3B+A-4B = 3A - B$<br><br>
+          이제 $A$, $B$를 대입하자:<br>
+          $3A = 3(x^3+x^2+1) = 3x^3 + 3x^2 + 3$<br>
+          $B = 3x^3 - x^2 + 2x + 4$<br><br>
+          $3A - B = (3x^3 + 3x^2 + 3) - (3x^3 - x^2 + 2x + 4)$<br>
+          $= 3x^3 + 3x^2 + 3 - 3x^3 + x^2 - 2x - 4$<br>
+          $= 4x^2 - 2x - 1$
+        </div>
+        <div class="answer">답: $4x^2 - 2x - 1$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 3: $A = x^3-x^2+2$, $B = x^3+2x^2$, $C = -x^3+3x+2$일 때</h4>
+    <p>(1) $(A-2B)+(3A+B)$ &nbsp;&nbsp; (2) $(A-2B)-(3B-2C)$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p><b>(1)</b> 지원아, 먼저 $A$, $B$로 정리하고 대입하자!</p>
+        <div class="step">
+          $(A-2B)+(3A+B) = 4A - B$<br>
+          $= 4(x^3-x^2+2) - (x^3+2x^2)$<br>
+          $= 4x^3 - 4x^2 + 8 - x^3 - 2x^2$<br>
+          $= 3x^3 - 6x^2 + 8$
+        </div>
+        <p><b>(2)</b></p>
+        <div class="step">
+          $(A-2B)-(3B-2C) = A - 2B - 3B + 2C = A - 5B + 2C$<br>
+          $= (x^3-x^2+2) - 5(x^3+2x^2) + 2(-x^3+3x+2)$<br>
+          $= x^3-x^2+2-5x^3-10x^2-2x^3+6x+4$<br>
+          $= -6x^3 - 11x^2 + 6x + 6$
+        </div>
+        <div class="answer">답: (1) $3x^3-6x^2+8$ &nbsp; (2) $-6x^3-11x^2+6x+6$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 4: $A=x^2+2y^2$, $B=4x^2-y$일 때, 다항식 $X$를 구하시오.</h4>
+    <p>(1) $A + X = B$ &nbsp;&nbsp; (2) $3X - 2A = B + 2X$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p><b>(1)</b> 지원아, $X$를 구하려면 이항하면 돼! $X = B - A$</p>
+        <div class="step">
+          $X = (4x^2 - y) - (x^2 + 2y^2) = 3x^2 - 2y^2 - y$
+        </div>
+        <p><b>(2)</b> 지원아, $X$가 포함된 항을 한쪽으로 모으자!</p>
+        <div class="step">
+          $3X - 2X = B + 2A$ → $X = B + 2A$<br>
+          $X = (4x^2 - y) + 2(x^2 + 2y^2) = 6x^2 + 4y^2 - y$
+        </div>
+        <div class="answer">답: (1) $3x^2-2y^2-y$ &nbsp; (2) $6x^2+4y^2-y$</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- 1-3 곱셈 -->
+<div class="concept" id="s1-3">
+  <h2>1-3. 다항식의 곱셈</h2>
+
+  <div class="analogy">
+    <br>
+    지원아, 옷 코디를 생각해봐!<br>
+    상의가 {흰티, 검정티} 2개, 하의가 {청바지, 치마, 반바지} 3개 있으면<br>
+    총 조합은 2 x 3 = <b>6가지</b>잖아? 모든 상의를 모든 하의와 한 번씩 매칭하는 거야.<br><br>
+    다항식 곱셈도 똑같아!<br>
+    $(x-2y)(3x+y)$에서 앞 괄호의 <b>모든 항</b>을 뒤 괄호의 <b>모든 항</b>에 각각 곱해주면 돼!
+  </div>
+
+  <h3>핵심: 분배법칙</h3>
+  <p>지원아, $(x-2y)(3x+y)$를 전개해볼게:</p>
+  <div class="step">
+    $= x \cdot 3x + x \cdot y + (-2y) \cdot 3x + (-2y) \cdot y$<br>
+    $= 3x^2 + xy - 6xy - 2y^2$<br>
+    $= 3x^2 - 5xy - 2y^2$ (동류항 정리!)
+  </div>
+
+  <div class="formula-box">
+    <h4>다항식의 곱셈에 대한 성질</h4>
+    <p>교환법칙: $AB = BA$ (순서 바꿔도 결과 같아!)</p>
+    <p>결합법칙: $(AB)C = A(BC)$ (어떤 걸 먼저 곱해도 같아!)</p>
+    <p>분배법칙: $A(B+C) = AB + AC$ (하나씩 나눠서 곱하기!)</p>
+  </div>
+
+  <div class="example">
+    <h4>예제 3: $(x-4)(x+1)(x+4)$를 전개하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 세 개를 한꺼번에 곱하면 복잡하니까, <b>쉬운 조합부터</b> 먼저 곱하는 게 요령이야!</p>
+        <div class="step">
+          $(x-4)$와 $(x+4)$가 보이지? 합차공식 쓸 수 있어!<br><br>
+          교환법칙으로 순서 바꾸기:<br>
+          $= (x+1)(x-4)(x+4)$<br>
+          $= (x+1)\{(x-4)(x+4)\}$ ← 결합법칙<br>
+          $= (x+1)(x^2 - 16)$ ← 합차공식! $(a+b)(a-b)=a^2-b^2$<br>
+          $= x^3 - 16x + x^2 - 16$<br>
+          $= x^3 + x^2 - 16x - 16$
+        </div>
+        <div class="answer">답: $x^3 + x^2 - 16x - 16$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 5: $(2x-1)(x+1)(2x+1)$을 전개하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, $(2x-1)$과 $(2x+1)$이 합차 패턴이야!</p>
+        <div class="step">
+          $= (2x-1)(2x+1)(x+1)$<br>
+          $= (4x^2 - 1)(x+1)$<br>
+          $= 4x^3 + 4x^2 - x - 1$
+        </div>
+        <div class="answer">답: $4x^3 + 4x^2 - x - 1$</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- 1-4 곱셈 공식 -->
+<div class="concept" id="s1-4">
+  <h2>1-4. 곱셈 공식</h2>
+
+  <div class="analogy">
+    <br>
+    지원아, 곱셈 공식은 수학의 <b>"단축키"</b>야!<br>
+    게임할 때 스킬 단축키 외우면 빨리 쓸 수 있는 것처럼,<br>
+    자주 나오는 곱셈 패턴을 외워두면 시험에서 시간을 아낄 수 있어!<br><br>
+    중학교에서 $(a+b)^2 = a^2 + 2ab + b^2$ 배웠지?<br>
+    고등학교에서는 여기에 <b>세제곱($^3$)</b>까지 확장하는 거야. 겁먹지 마, 패턴만 알면 쉬워!
+  </div>
+
+  <div class="formula-box">
+    <h4>곱셈 공식 (1) - 지원아, 중학교 때 배운 것 + 확장!</h4>
+    <p>$① \; (a+b)^2 = a^2 + 2ab + b^2$</p>
+    <p>$② \; (a-b)^2 = a^2 - 2ab + b^2$</p>
+    <p>$③ \; (a+b)(a-b) = a^2 - b^2$</p>
+    <p>$④ \; (x+a)(x+b) = x^2 + (a+b)x + ab$</p>
+    <p>$⑤ \; (ax+b)(cx+d) = acx^2 + (ad+bc)x + bd$</p>
+  </div>
+
+  <div class="formula-box">
+    <h4>곱셈 공식 (2) - 고등학교에서 새로 배우는 공식!</h4>
+    <p>$① \; (a+b+c)^2 = a^2+b^2+c^2+2ab+2bc+2ca$</p>
+    <p>$② \; (a+b)^3 = a^3 + 3a^2b + 3ab^2 + b^3$</p>
+    <p>$③ \; (a-b)^3 = a^3 - 3a^2b + 3ab^2 - b^3$</p>
+    <p>$④ \; (a+b)(a^2-ab+b^2) = a^3 + b^3$</p>
+    <p>$⑤ \; (a-b)(a^2+ab+b^2) = a^3 - b^3$</p>
+  </div>
+
+  <div class="tip">
+    <br>
+    지원아, $(a+b)^3$ 외우는 비법!<br>
+    계수가 <b>1, 3, 3, 1</b>이야. "일삼삼일"로 외워!<br>
+    $(a-b)^3$은 부호가 <b>+, -, +, -</b> 번갈아 나와!<br>
+    즉, $(a-b)^3 = a^3 - 3a^2b + 3ab^2 - b^3$
+  </div>
+
+  <div class="example">
+    <h4>예제 4: $(a+b+c)^2$을 전개하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 세 글자가 들어있으니까 두 글자로 먼저 묶어보자!</p>
+        <div class="step">
+          $(a+b+c)^2 = \{(a+b)+c\}^2$<br>
+          $= (a+b)^2 + 2(a+b)c + c^2$ ← 이건 중학교 공식!<br>
+          $= a^2 + 2ab + b^2 + 2ac + 2bc + c^2$<br>
+          $= a^2 + b^2 + c^2 + 2ab + 2bc + 2ca$
+        </div>
+        <div class="answer">답: $a^2+b^2+c^2+2ab+2bc+2ca$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 6: $(a-b+c)^2$을 전개하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 위의 공식에서 $b$ 자리에 $(-b)$를 넣기만 하면 돼!</p>
+        <div class="step">
+          $= a^2 + (-b)^2 + c^2 + 2a(-b) + 2(-b)c + 2ca$<br>
+          $= a^2 + b^2 + c^2 - 2ab - 2bc + 2ca$
+        </div>
+        <div class="answer">답: $a^2+b^2+c^2-2ab-2bc+2ca$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>예제 5: 다음 식을 전개하시오. (1) $(a+b)^3$ &nbsp; (2) $(a+b)(a^2-ab+b^2)$</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p><b>(1)</b> 지원아, "일삼삼일" 기억나지?</p>
+        <div class="step">
+          $(a+b)^3 = (a+b)(a+b)^2 = (a+b)(a^2+2ab+b^2)$<br>
+          $= a^3 + 2a^2b + ab^2 + a^2b + 2ab^2 + b^3$<br>
+          $= a^3 + 3a^2b + 3ab^2 + b^3$ ← 계수가 1, 3, 3, 1!
+        </div>
+        <p><b>(2)</b> 지원아, 이건 신기하게도 중간 항이 다 사라져!</p>
+        <div class="step">
+          $(a+b)(a^2-ab+b^2)$<br>
+          $= a^3 - a^2b + ab^2 + a^2b - ab^2 + b^3$<br>
+          $= a^3 + b^3$ (마법처럼 깔끔해지지?)
+        </div>
+        <div class="answer">답: (1) $a^3+3a^2b+3ab^2+b^3$ &nbsp; (2) $a^3+b^3$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 7: 다음 식을 전개하시오. (1) $(a-b)^3$ &nbsp; (2) $(a-b)(a^2+ab+b^2)$</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p><b>(1)</b> 지원아, $(a+b)^3$에서 $b$를 $-b$로 바꾸면 돼!</p>
+        <div class="step">
+          $(a-b)^3 = a^3 - 3a^2b + 3ab^2 - b^3$ ← 부호 번갈아!
+        </div>
+        <p><b>(2)</b></p>
+        <div class="step">
+          $(a-b)(a^2+ab+b^2) = a^3 + a^2b + ab^2 - a^2b - ab^2 - b^3 = a^3 - b^3$
+        </div>
+        <div class="answer">답: (1) $a^3-3a^2b+3ab^2-b^3$ &nbsp; (2) $a^3-b^3$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 8: 곱셈 공식을 이용하여 다음 식을 전개하시오.</h4>
+    <p>(1) $(x-y+2z)^2$ &nbsp; (2) $(a+2b)^3$</p>
+    <p>(3) $(x+1)(x^2-x+1)$ &nbsp; (4) $(2a-b)(4a^2+2ab+b^2)$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p><b>(1)</b> 지원아, $(a+b+c)^2$ 공식에서 $a=x, b=-y, c=2z$!</p>
+        <div class="step">
+          $= x^2 + y^2 + 4z^2 - 2xy - 4yz + 4zx$
+        </div>
+        <p><b>(2)</b> 지원아, $(a+b)^3$ 공식에서 $b=2b$로!</p>
+        <div class="step">
+          $(a+2b)^3 = a^3 + 3a^2(2b) + 3a(2b)^2 + (2b)^3$<br>
+          $= a^3 + 6a^2b + 12ab^2 + 8b^3$
+        </div>
+        <p><b>(3)</b> 지원아, 이건 $a^3+b^3$ 패턴이야! ($a=x, b=1$)</p>
+        <div class="step">
+          $= x^3 + 1^3 = x^3 + 1$
+        </div>
+        <p><b>(4)</b> 지원아, 이건 $a^3-b^3$ 패턴! ($a=2a, b=b$)</p>
+        <div class="step">
+          $= (2a)^3 - b^3 = 8a^3 - b^3$
+        </div>
+        <div class="answer">답: (1) $x^2+y^2+4z^2-2xy-4yz+4zx$<br>
+        (2) $a^3+6a^2b+12ab^2+8b^3$<br>
+        (3) $x^3+1$ &nbsp; (4) $8a^3-b^3$</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- 1-5 나눗셈 -->
+<div class="concept" id="s1-5">
+  <h2>1-5. 다항식의 나눗셈</h2>
+
+  <div class="analogy">
+    <br>
+    지원아, 초등학교 때 긴 나눗셈(필산) 했던 거 기억나?<br>
+    $315 \div 13 = 24$ 나머지 $3$ → $315 = 13 \times 24 + 3$<br><br>
+    다항식 나눗셈도 <b>자연수 나눗셈이랑 같은 방식</b>이야!<br>
+    $A \div B = Q$ 나머지 $R$ → $\boldsymbol{A = BQ + R}$<br>
+    (나눠지는 식) = (나누는 식) x (몫) + (나머지)<br><br>
+    중요한 규칙 하나! 나머지의 차수는 나누는 식의 차수보다 항상 <b>낮아야</b> 해!
+  </div>
+
+  <div class="example">
+    <h4>교과서 예시: $(3x^2-7x+5) \div (x-2)$</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 세로 나눗셈(필산)으로 풀어보자!</p>
+        <div class="step">
+          1단계: $3x^2 \div x = 3x$ (몫의 첫째 항)<br>
+          &nbsp;&nbsp;$3x \times (x-2) = 3x^2 - 6x$<br>
+          &nbsp;&nbsp;빼기: $(3x^2-7x) - (3x^2-6x) = -x$<br><br>
+          2단계: 내려온 $-x+5$에서 $-x \div x = -1$ (몫의 둘째 항)<br>
+          &nbsp;&nbsp;$-1 \times (x-2) = -x+2$<br>
+          &nbsp;&nbsp;빼기: $(-x+5) - (-x+2) = 3$<br><br>
+          따라서 <b>몫: $3x-1$, 나머지: $3$</b>
+        </div>
+        <p>검산: $3x^2-7x+5 = (x-2)(3x-1) + 3$ ✓</p>
+        <div class="answer">답: 몫 $3x-1$, 나머지 $3$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 9: 다항식 $A$를 $B$로 나누었을 때의 몫 $Q$와 나머지 $R$을 구하고, $A=BQ+R$ 꼴로 나타내시오.</h4>
+    <p>(1) $A = 2x^3 - x^2 - 4x + 3$, $B = x+1$</p>
+    <p>(2) $A = 6x^3 - 3x^2 + 7x$, $B = x^2 + x - 1$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p><b>(1)</b> 지원아, 세로 나눗셈 순서대로 해보자!</p>
+        <div class="step">
+          $2x^3 \div x = 2x^2$<br>
+          $2x^2(x+1) = 2x^3+2x^2$, 빼면 $-3x^2-4x+3$<br>
+          $-3x^2 \div x = -3x$<br>
+          $-3x(x+1) = -3x^2-3x$, 빼면 $-x+3$<br>
+          $-x \div x = -1$<br>
+          $-1(x+1) = -x-1$, 빼면 $4$<br><br>
+          몫: $2x^2-3x-1$, 나머지: $4$<br>
+          $2x^3-x^2-4x+3 = (x+1)(2x^2-3x-1)+4$
+        </div>
+        <p><b>(2)</b></p>
+        <div class="step">
+          $6x^3 \div x^2 = 6x$<br>
+          $6x(x^2+x-1) = 6x^3+6x^2-6x$, 빼면 $-9x^2+13x$<br>
+          $-9x^2 \div x^2 = -9$<br>
+          $-9(x^2+x-1) = -9x^2-9x+9$, 빼면 $22x-9$<br><br>
+          몫: $6x-9$, 나머지: $22x-9$<br>
+          $6x^3-3x^2+7x = (x^2+x-1)(6x-9)+(22x-9)$
+        </div>
+        <div class="answer">답: (1) $Q=2x^2-3x-1$, $R=4$<br>(2) $Q=6x-9$, $R=22x-9$</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- 1-6 조립제법 -->
+<div class="concept" id="s1-6">
+  <h2>1-6. 조립제법</h2>
+
+  <div class="analogy">
+    <br>
+    지원아, 세로 나눗셈이 너무 길고 귀찮지 않았어?<br>
+    조립제법은 <b>계수만 써서 빠르게 나눗셈하는 꿀 방법</b>이야!<br>
+    단, $(x-a)$처럼 <b>일차식으로 나눌 때만</b> 쓸 수 있어.<br><br>
+    계수를 쭉 써놓고, "곱하고 더하기"를 반복하면 끝이야! 정말 빨라서 시험에서 시간 절약 됨!
+  </div>
+
+  <h3>지원아, 조립제법 이렇게 하는 거야!</h3>
+  <p>$P(x)$를 $(x-a)$로 나눌 때:</p>
+  <ol>
+    <li>$P(x)$의 <b>계수만</b> 순서대로 쓴다 (빠진 차수가 있으면 <b>0</b>을 써줘!)</li>
+    <li>왼쪽에 $a$를 쓴다 (나누는 식이 $x-a$이면 $a$를 써!)</li>
+    <li>맨 앞 계수를 그대로 내리고, $a$를 곱해서 다음 칸에 쓰고 더하기를 반복!</li>
+    <li>마지막 수 = 나머지, 나머지 수들 = 몫의 계수!</li>
+  </ol>
+
+  <div class="example">
+    <h4>예제 6: $(x^3-3x^2+1) \div (x-1)$을 조립제법으로 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, $x-1$이니까 $a=1$이야. 그리고 $x$ 항이 없으니까 <b>0을 넣어야</b> 해!</p>
+        <div class="step">
+          계수: $1, -3, 0, 1$ ($x$ 항이 없으므로 0!)<br><br>
+          <pre style="font-family: monospace; font-size: 1.1em; background: #f7fafc; padding: 12px; border-radius: 6px;">
+  1 │ 1   -3    0    1
+    │      1   -2   -2
+    ├──────────────────
+      1   -2   -2   -1
+          </pre>
+          과정: 1 내리기 → 1x1=1 → -3+1=-2 → 1x(-2)=-2 → 0+(-2)=-2 → 1x(-2)=-2 → 1+(-2)=-1<br><br>
+          몫: $x^2-2x-2$, 나머지: $-1$
+        </div>
+        <div class="answer">답: 몫 $x^2-2x-2$, 나머지 $-1$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 10: 조립제법을 이용하여 다음 나눗셈의 몫과 나머지를 구하시오.</h4>
+    <p>(1) $(x^3+x^2-4x+2) \div (x+3)$</p>
+    <p>(2) $(2x^3+4x-3) \div (x-1)$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p><b>(1)</b> 지원아, $x+3 = x-(-3)$이니까 $a = -3$이야!</p>
+        <div class="step">
+          <pre style="font-family: monospace; font-size: 1.1em; background: #f7fafc; padding: 12px; border-radius: 6px;">
+ -3 │ 1    1   -4    2
+    │     -3    6   -6
+    ├──────────────────
+      1   -2    2   -4
+          </pre>
+          몫: $x^2-2x+2$, 나머지: $-4$
+        </div>
+        <p><b>(2)</b> 지원아, $a = 1$이고, $x^2$ 항이 없으니까 <b>0을 꼭</b> 넣어야 해!</p>
+        <div class="step">
+          계수: $2, 0, 4, -3$
+          <pre style="font-family: monospace; font-size: 1.1em; background: #f7fafc; padding: 12px; border-radius: 6px;">
+  1 │ 2    0    4   -3
+    │      2    2    6
+    ├──────────────────
+      2    2    6    3
+          </pre>
+          몫: $2x^2+2x+6$, 나머지: $3$
+        </div>
+        <div class="answer">답: (1) 몫 $x^2-2x+2$, 나머지 $-4$<br>(2) 몫 $2x^2+2x+6$, 나머지 $3$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>예제 7: $(2x^3+3x^2-x+2) \div (2x+1)$을 조립제법으로 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 나누는 식이 $2x+1$처럼 $x$ 앞에 숫자가 있으면 한 단계 더 있어!</p>
+        <div class="step">
+          $2x+1 = 2(x+\frac{1}{2})$이므로 $a = -\frac{1}{2}$로 조립제법!<br>
+          <pre style="font-family: monospace; font-size: 1.1em; background: #f7fafc; padding: 12px; border-radius: 6px;">
+-1/2 │ 2    3   -1    2
+     │     -1   -1    1
+     ├───────────────────
+       2    2   -2    3
+          </pre>
+          나머지: $3$<br>
+          몫 계수 $2, 2, -2$에서 앞의 2로 나누면: $x^2+x-1$<br>
+          $(2x+1)$로 나눈 몫: $x^2+x-1$, 나머지: $3$
+        </div>
+        <div class="answer">답: 몫 $x^2+x-1$, 나머지 $3$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 11: 조립제법으로 구하시오.</h4>
+    <p>(1) $(4x^3-x+5) \div (2x-1)$</p>
+    <p>(2) $(3x^3-8x^2-2x+1) \div (3x-2)$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p><b>(1)</b> $2x-1 = 2(x-\frac{1}{2})$, $a=\frac{1}{2}$</p>
+        <div class="step">
+          <pre style="font-family: monospace; font-size: 1.1em; background: #f7fafc; padding: 12px; border-radius: 6px;">
+ 1/2 │ 4    0   -1    5
+     │      2    1    0
+     ├───────────────────
+       4    2    0    5
+          </pre>
+          $(2x-1)$로 나눈 몫: $2x^2+x$, 나머지: $5$
+        </div>
+        <p><b>(2)</b> $3x-2 = 3(x-\frac{2}{3})$, $a=\frac{2}{3}$</p>
+        <div class="step">
+          <pre style="font-family: monospace; font-size: 1.1em; background: #f7fafc; padding: 12px; border-radius: 6px;">
+ 2/3 │ 3   -8   -2    1
+     │      2   -4   -4
+     ├───────────────────
+       3   -6   -6   -3
+          </pre>
+          $(3x-2)$로 나눈 몫: $x^2-2x-2$, 나머지: $-3$
+        </div>
+        <div class="answer">답: (1) 몫 $2x^2+x$, 나머지 $5$<br>(2) 몫 $x^2-2x-2$, 나머지 $-3$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 12: 밑면의 반지름이 $A$이고 높이가 $2x+1$인 원기둥의 부피가 $(2x^3+13x^2+24x+9)\pi$일 때, $A$를 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 원기둥 부피 공식 기억나? $V = \pi r^2 h$야!</p>
+        <div class="step">
+          $\pi A^2 (2x+1) = (2x^3+13x^2+24x+9)\pi$<br>
+          양변에서 $\pi$ 지우면: $A^2 = (2x^3+13x^2+24x+9) \div (2x+1)$<br><br>
+          조립제법 ($a = -\frac{1}{2}$):<br>
+          <pre style="font-family: monospace; font-size: 1.1em; background: #f7fafc; padding: 12px; border-radius: 6px;">
+-1/2 │ 2   13   24    9
+     │     -1   -6   -9
+     ├───────────────────
+       2   12   18    0
+          </pre>
+          $A^2 = x^2 + 6x + 9 = (x+3)^2$<br>
+          $x > 0$이니까 $A = x+3$
+        </div>
+        <div class="answer">답: $A = x+3$</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- ===================== 2단원 ===================== -->
+<div class="chapter ch2" id="s2">2단원: 항등식과 나머지정리</div>
+
+<!-- 2-1 항등식 -->
+<div class="concept" id="s2-1">
+  <h2>2-1. 항등식과 미정계수법</h2>
+
+  <div class="analogy">
+    <br>
+    지원아, "방정식"과 "항등식"의 차이를 알려줄게!<br><br>
+    <b>방정식</b>: 특정 값에서만 성립해 → $2x+1=5$ → $x=2$일 때만 맞음!<br>
+    <b>항등식</b>: $x$에 <b>뭘 넣어도 항상</b> 성립! → $2(x+1) = 2x+2$ → 아무 수나 넣어봐, 항상 맞아!<br><br>
+    쉽게 말하면, 항등식은 "양쪽이 사실은 같은 식을 다르게 쓴 것"이야!
+  </div>
+
+  <div class="formula-box">
+    <h4>항등식의 성질 - 지원아, 이 두 가지만 기억해!</h4>
+    <p>① $ax^2+bx+c = 0$이 $x$에 대한 항등식이면 → $a=0,\; b=0,\; c=0$ (모든 계수가 0!)</p>
+    <p>② $ax^2+bx+c = a'x^2+b'x+c'$이 항등식이면 → $a=a',\; b=b',\; c=c'$ (같은 자리 계수가 같다!)</p>
+  </div>
+
+  <h3>미정계수법 (모르는 계수 찾기!)</h3>
+  <p>지원아, 미정계수법에는 두 가지 방법이 있어:</p>
+  <p><b>방법 1</b>: 양변의 같은 차수 항의 계수를 비교하기 (계수비교법)</p>
+  <p><b>방법 2</b>: $x$에 편한 수를 대입해서 식 세우기 (수치대입법)</p>
+
+  <div class="example">
+    <h4>예제 1: $a(x-1)^2+b(x-1)+c = x^2+2x+3$이 항등식일 때, $a, b, c$를 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p><b>방법 1: 계수 비교</b> - 지원아, 좌변을 전개해서 비교하자!</p>
+        <div class="step">
+          좌변 전개: $a(x^2-2x+1)+b(x-1)+c$<br>
+          $= ax^2 + (-2a+b)x + (a-b+c)$<br><br>
+          양변 계수 비교:<br>
+          $x^2$ 계수: $a = 1$<br>
+          $x^1$ 계수: $-2a+b = 2$ → $-2+b=2$ → $b = 4$<br>
+          $x^0$ 계수: $a-b+c = 3$ → $1-4+c=3$ → $c = 6$
+        </div>
+        <p><b>방법 2: 수 대입</b> - 지원아, 이 방법이 더 빠를 때도 있어!</p>
+        <div class="step">
+          $x=1$ 대입: $0+0+c = 1+2+3=6$ → $c=6$<br>
+          $x=0$ 대입: $a(-1)^2+b(-1)+c = 3$ → $a-b+c=3$ → $a-b=-3$ …①<br>
+          $x=2$ 대입: $a(1)^2+b(1)+c = 11$ → $a+b+c=11$ → $a+b=5$ …②<br>
+          ①+②에서: $2a=2$ → $a=1,\; b=4$
+        </div>
+        <div class="answer">답: $a=1,\; b=4,\; c=6$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 1: 다음 등식이 $x$에 대한 항등식이 되게 하는 상수 $a, b, c$의 값을 구하시오.</h4>
+    <p>(1) $(a-2)x^2 + (b+3)x + c - 1 = 0$</p>
+    <p>(2) $x^2 + ax + 4 = bx^2 + 6x - c$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p><b>(1)</b> 지원아, 우변이 0이면 모든 계수가 0이야!</p>
+        <div class="step">
+          $a-2=0 \Rightarrow a=2$<br>
+          $b+3=0 \Rightarrow b=-3$<br>
+          $c-1=0 \Rightarrow c=1$
+        </div>
+        <p><b>(2)</b> 지원아, 양변의 같은 자리 계수끼리 비교!</p>
+        <div class="step">
+          $x^2$ 계수: $1=b$<br>
+          $x$ 계수: $a=6$<br>
+          상수항: $4=-c \Rightarrow c=-4$
+        </div>
+        <div class="answer">답: (1) $a=2, b=-3, c=1$ &nbsp; (2) $a=6, b=1, c=-4$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 2: 다음 등식이 $x$에 대한 항등식이 되게 하는 상수 $a, b, c$의 값을 구하시오.</h4>
+    <p>(1) $2x^3-6x+4 = a(x-1)^3 + b(x-1)^2 + c$</p>
+    <p>(2) $x^3+ax+4 = (x+1)(x^2+bx+c)$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p><b>(1)</b> 지원아, $(x-1)$이 들어있으니까 $x=1$을 넣으면 깔끔해져!</p>
+        <div class="step">
+          $x=1$: $2-6+4 = c$, $c=0$<br>
+          $x=0$: $4 = -a+b+0$, $-a+b=4$ …①<br>
+          $x=2$: $16-12+4 = a+b$, $a+b=8$ …②<br>
+          ①+②에서 $2b=12$, $b=6$, $a=2$
+        </div>
+        <p><b>(2)</b> 지원아, 우변을 전개해서 비교하자!</p>
+        <div class="step">
+          우변: $x^3+(b+1)x^2+(c+b)x+c$<br>
+          $x^2$ 계수: $0 = b+1 \Rightarrow b=-1$<br>
+          상수항: $4 = c$<br>
+          $x$ 계수: $a = c+b = 4-1 = 3$
+        </div>
+        <div class="answer">답: (1) $a=2, b=6, c=0$ &nbsp; (2) $a=3, b=-1, c=4$</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- 2-2 나머지정리 -->
+<div class="concept" id="s2-2">
+  <h2>2-2. 나머지정리</h2>
+
+  <div class="analogy">
+    <br>
+    지원아, 이건 정말 신기한 정리야!<br><br>
+    다항식 $P(x)$를 $(x-2)$로 나누었을 때 나머지를 구하고 싶다면?<br>
+    <b>긴 나눗셈을 하지 않아도</b> 그냥 $P(2)$만 계산하면 바로 나머지가 나와!<br><br>
+    왜 그런지 알려줄게:<br>
+    $P(x) = (x-2) \cdot Q(x) + R$에서 $x=2$를 넣으면<br>
+    $(x-2)$ 부분이 <b>0</b>이 되니까 $P(2) = 0 \times Q(2) + R = R$<br>
+    나머지만 남는 거야! 신기하지?
+  </div>
+
+  <div class="formula-box">
+    <h4>나머지정리 - 지원아, 이것만 기억하자!</h4>
+    <p>다항식 $P(x)$를 일차식 $x-a$로 나누었을 때의 나머지 $R$은</p>
+    <p style="font-size:1.3em;">$R = P(a)$</p>
+    <p>$(x-a)$로 나누면 → $x$에 $a$ 대입!</p>
+    <p>$(ax+b)$로 나누면 → $x$에 $-\dfrac{b}{a}$ 대입!</p>
+  </div>
+
+  <div class="example">
+    <h4>예제 2: $P(x)=2x^3-3x^2+4$를 $2x+1$로 나누었을 때의 나머지를 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, $2x+1=0$에서 $x=-\frac{1}{2}$이니까 이걸 대입하면 돼!</p>
+        <div class="step">
+          $R = P\!\left(-\frac{1}{2}\right) = 2\!\left(-\frac{1}{2}\right)^3 - 3\!\left(-\frac{1}{2}\right)^2 + 4$<br>
+          $= 2 \times \left(-\frac{1}{8}\right) - 3 \times \frac{1}{4} + 4$<br>
+          $= -\frac{1}{4} - \frac{3}{4} + 4 = -1 + 4 = 3$
+        </div>
+        <div class="answer">답: $3$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 3: $P(x)=x^3+4x^2+x-5$를 다음 일차식으로 나누었을 때의 나머지를 구하시오.</h4>
+    <p>(1) $x-1$ &nbsp; (2) $x+2$ &nbsp; (3) $x-\frac{1}{2}$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 그냥 대입만 하면 돼! 나눗셈 필요 없어!</p>
+        <p><b>(1)</b> $P(1) = 1+4+1-5 = 1$</p>
+        <p><b>(2)</b> $P(-2) = -8+16-2-5 = 1$</p>
+        <p><b>(3)</b> $P\!\left(\frac{1}{2}\right) = \frac{1}{8}+1+\frac{1}{2}-5 = -\frac{27}{8}$</p>
+        <div class="answer">답: (1) $1$ &nbsp; (2) $1$ &nbsp; (3) $-\dfrac{27}{8}$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 4: $P(x) = 6x^3-x+1$을 다음 일차식으로 나누었을 때의 나머지를 구하시오.</h4>
+    <p>(1) $2x-1$ &nbsp; (2) $3x+2$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p><b>(1)</b> 지원아, $2x-1=0$이면 $x=\frac{1}{2}$!</p>
+        <div class="step">
+          $P\!\left(\frac{1}{2}\right) = 6 \cdot \frac{1}{8} - \frac{1}{2} + 1 = \frac{3}{4} - \frac{1}{2} + 1 = \frac{5}{4}$
+        </div>
+        <p><b>(2)</b> $3x+2=0$이면 $x=-\frac{2}{3}$!</p>
+        <div class="step">
+          $P\!\left(-\frac{2}{3}\right) = 6 \cdot \left(-\frac{8}{27}\right) + \frac{2}{3} + 1 = -\frac{16}{9} + \frac{6}{9} + \frac{9}{9} = -\frac{1}{9}$
+        </div>
+        <div class="answer">답: (1) $\dfrac{5}{4}$ &nbsp; (2) $-\dfrac{1}{9}$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>예제 3: $P(x)$를 $x-1$로 나누었을 때 나머지가 $5$이고, $x+2$로 나누었을 때 나머지가 $-4$이다. $P(x)$를 $(x-1)(x+2)$로 나누었을 때의 나머지를 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 나누는 식이 이차식이면 나머지는 <b>일차식 $ax+b$</b>가 돼!</p>
+        <div class="step">
+          $P(x) = (x-1)(x+2)Q(x) + ax + b$로 놓자<br><br>
+          $P(1) = 5$이니까: $a + b = 5$ …①<br>
+          $P(-2) = -4$이니까: $-2a + b = -4$ …②<br><br>
+          ①-② 하면: $3a = 9$, $a = 3$<br>
+          ①에서: $b = 2$<br>
+          나머지는 $3x+2$!
+        </div>
+        <div class="answer">답: 나머지 $3x+2$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 5: $P(x)$를 $x+3$으로 나누었을 때 나머지가 $-10$이고, $x-2$로 나누었을 때 나머지가 $40$이다. $P(x)$를 $(x+3)(x-2)$로 나누었을 때의 나머지를 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 위 예제랑 같은 방법이야!</p>
+        <div class="step">
+          나머지를 $ax+b$로 놓으면:<br>
+          $P(-3) = -3a+b = -10$ …①<br>
+          $P(2) = 2a+b = 40$ …②<br><br>
+          ②-①: $5a = 50$, $a=10$<br>
+          ②에서: $b = 40-20 = 20$
+        </div>
+        <div class="answer">답: 나머지 $10x+20$</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- 2-3 인수정리 -->
+<div class="concept" id="s2-3">
+  <h2>2-3. 인수정리</h2>
+
+  <div class="analogy">
+    <br>
+    지원아, 나머지정리에서 한 발짝만 더 나가면 인수정리야!<br><br>
+    나머지가 딱 <b>0</b>이 되면? → 나누어떨어진다! → $(x-a)$가 $P(x)$의 <b>인수</b>야!<br><br>
+    생각해봐: $12 \div 3 = 4$ (나머지 0) → 3은 12의 약수!<br>
+    마찬가지로 $P(a) = 0$이면 → $(x-a)$는 $P(x)$의 인수!<br>
+    이게 인수정리의 전부야. 어렵지 않지?
+  </div>
+
+  <div class="formula-box">
+    <h4>인수정리 - 지원아, 핵심 딱 하나!</h4>
+    <p>$P(a)=0$ &nbsp; ⟺ &nbsp; $P(x)$는 $(x-a)$로 나누어떨어진다</p>
+    <p>($P(a)=0$이면 $(x-a)$가 인수! / $(x-a)$가 인수이면 $P(a)=0$!)</p>
+  </div>
+
+  <div class="example">
+    <h4>예제 4: $P(x) = x^3 - ax + 4$가 $x-2$로 나누어떨어지게 하는 상수 $a$의 값을 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 나누어떨어진다 = 나머지가 0 = $P(2) = 0$!</p>
+        <div class="step">
+          $P(2) = 8 - 2a + 4 = 0$<br>
+          $12 - 2a = 0$<br>
+          $a = 6$
+        </div>
+        <div class="answer">답: $a = 6$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 6: 일차식 $x+2$가 다항식 $P(x) = x^3+5x^2+2ax+a$의 인수가 되도록 하는 상수 $a$의 값을 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, $x+2$가 인수 → $P(-2) = 0$!</p>
+        <div class="step">
+          $(-2)^3 + 5(-2)^2 + 2a(-2) + a = 0$<br>
+          $-8 + 20 - 4a + a = 0$<br>
+          $12 - 3a = 0$<br>
+          $a = 4$
+        </div>
+        <div class="answer">답: $a = 4$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 7: $P(x) = x^3+ax^2+bx-2$가 $(x-1)(x-2)$로 나누어떨어지게 하는 상수 $a, b$의 값을 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, $(x-1)$과 $(x-2)$ 둘 다 인수니까, $P(1)=0$이고 $P(2)=0$이야!</p>
+        <div class="step">
+          $P(1) = 0$: $1+a+b-2 = 0$, $a+b = 1$ …①<br>
+          $P(2) = 0$: $8+4a+2b-2 = 0$, $4a+2b = -6$, $2a+b = -3$ …②<br>
+          ②-①: $a = -4$, ①에서 $b = 5$
+        </div>
+        <div class="answer">답: $a=-4,\; b=5$</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- ===================== 3단원 ===================== -->
+<div class="chapter ch3" id="s3">3단원: 인수분해</div>
+
+<!-- 3-1 인수분해 공식 -->
+<div class="concept" id="s3-1">
+  <h2>3-1. 인수분해 공식</h2>
+
+  <div class="analogy">
+    <br>
+    지원아, <b>전개</b>(곱셈 공식)가 "선물 상자를 풀어헤치는 것"이라면,<br>
+    <b>인수분해</b>는 "다시 예쁘게 포장하는 것"이야!<br><br>
+    자연수도 인수분해할 수 있어: $12 = 2 \times 2 \times 3$ (소인수분해)<br>
+    다항식도 마찬가지: $x^2+5x+6 = (x+2)(x+3)$<br><br>
+    곱셈 공식을 <b>거꾸로</b> 쓰면 인수분해 공식이 되는 거야!
+  </div>
+
+  <div class="formula-box">
+    <h4>인수분해 공식 - 지원아, 이 5개가 핵심이야!</h4>
+    <p>$① \; a^2+b^2+c^2+2ab+2bc+2ca = (a+b+c)^2$</p>
+    <p>$② \; a^3+3a^2b+3ab^2+b^3 = (a+b)^3$</p>
+    <p>$③ \; a^3-3a^2b+3ab^2-b^3 = (a-b)^3$</p>
+    <p>$④ \; a^3+b^3 = (a+b)(a^2-ab+b^2)$</p>
+    <p>$⑤ \; a^3-b^3 = (a-b)(a^2+ab+b^2)$</p>
+  </div>
+
+  <div class="tip">
+    <br>
+    지원아, $a^3+b^3$와 $a^3-b^3$ 인수분해 외우는 법!<br>
+    앞 괄호: 부호 <b>그대로</b> $(a+b)$ 또는 $(a-b)$<br>
+    뒤 괄호: 제곱, <b>부호 반대</b>로 곱, 제곱 → $(a^2 \mp ab + b^2)$<br>
+    "같, 다, 같" 으로 외워!
+  </div>
+
+  <div class="example">
+    <h4>예제 1: 다음 식을 인수분해하시오. (1) $x^3+9x^2+27x+27$ &nbsp; (2) $a^3-64b^3$</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p><b>(1)</b> 지원아, "일삼삼일" 패턴이 보이지? $(a+b)^3$이야!</p>
+        <div class="step">
+          $x^3 + 3 \cdot x^2 \cdot 3 + 3 \cdot x \cdot 3^2 + 3^3$<br>
+          여기서 $a=x, b=3$이니까<br>
+          $= (x+3)^3$
+        </div>
+        <p><b>(2)</b> 지원아, $64b^3 = (4b)^3$이니까 $a^3 - b^3$ 패턴!</p>
+        <div class="step">
+          $a^3 - (4b)^3 = (a-4b)(a^2+4ab+16b^2)$
+        </div>
+        <div class="answer">답: (1) $(x+3)^3$ &nbsp; (2) $(a-4b)(a^2+4ab+16b^2)$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 1: 다음 식을 인수분해하시오.</h4>
+    <p>(1) $x^2+4y^2+4z^2+4xy-8yz-4zx$</p>
+    <p>(2) $a^3-6a^2b+12ab^2-8b^3$</p>
+    <p>(3) $x^3+27$</p>
+    <p>(4) $8a^3-125b^3$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p><b>(1)</b> 지원아, $(a+b+c)^2$ 패턴이야! $a=x, b=2y, c=-2z$로 맞춰봐!</p>
+        <div class="step">
+          $= x^2+(2y)^2+(-2z)^2+2(x)(2y)+2(2y)(-2z)+2(-2z)(x)$<br>
+          $= (x+2y-2z)^2$
+        </div>
+        <p><b>(2)</b> 지원아, $(a-b)^3$ 패턴! $b=2b$로!</p>
+        <div class="step">$= (a-2b)^3$</div>
+        <p><b>(3)</b> $a^3+b^3$ 패턴 ($b=3$):</p>
+        <div class="step">$= (x+3)(x^2-3x+9)$</div>
+        <p><b>(4)</b> $a^3-b^3$ 패턴 ($a=2a, b=5b$):</p>
+        <div class="step">$= (2a-5b)(4a^2+10ab+25b^2)$</div>
+        <div class="answer">답: (1) $(x+2y-2z)^2$ &nbsp; (2) $(a-2b)^3$<br>
+        (3) $(x+3)(x^2-3x+9)$ &nbsp; (4) $(2a-5b)(4a^2+10ab+25b^2)$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 2: 인수분해를 이용하여 $\dfrac{98^3+8}{96 \times 98 + 4}$의 값을 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 숫자가 커서 겁나지? 인수분해하면 마법처럼 간단해져!</p>
+        <div class="step">
+          분자: $98^3 + 8 = 98^3 + 2^3 = (98+2)(98^2-98 \cdot 2+4)$<br>
+          $= 100 \times (9604-196+4) = 100 \times 9412$<br><br>
+          분모: $96 \times 98 + 4 = (98-2)(98) + 4 = 98^2 - 196 + 4 = 9412$<br><br>
+          $\dfrac{100 \times 9412}{9412} = 100$ ← 깔끔!
+        </div>
+        <div class="answer">답: $100$</div>
+      </div>
+    </details>
+  </div>
+
+  <h3>지원아, $x^2 = X$로 바꿔서 인수분해하는 기법도 있어!</h3>
+
+  <div class="analogy">
+    <br>
+    지원아, $x^4 + 3x^2 - 4$를 보면 $x^2$이 계속 반복되지?<br>
+    이럴 때 $x^2 = X$로 바꾸면 $X^2 + 3X - 4$가 돼서 <b>쉬운 이차식</b>이 되는 거야!<br>
+    이걸 먼저 인수분해하고, $X$를 다시 $x^2$로 돌려놓으면 끝!
+  </div>
+
+  <div class="example">
+    <h4>예제 3: 다음 식을 인수분해하시오. (1) $x^4+3x^2-4$ &nbsp; (2) $x^4+5x^2+9$</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p><b>(1)</b> 지원아, $x^2 = X$로 놓으면 쉬워져!</p>
+        <div class="step">
+          $X^2+3X-4 = (X-1)(X+4)$<br>
+          $X$를 $x^2$으로 돌려놓으면:<br>
+          $= (x^2-1)(x^2+4) = (x+1)(x-1)(x^2+4)$
+        </div>
+        <p><b>(2)</b> 지원아, 이건 바로 안 되니까 $A^2 - B^2$ 형태로 변형해야 해!</p>
+        <div class="step">
+          $x^4+5x^2+9 = (x^4+6x^2+9)-x^2$<br>
+          $= (x^2+3)^2 - x^2$ ← 이제 합차공식!<br>
+          $= (x^2+3+x)(x^2+3-x)$<br>
+          $= (x^2+x+3)(x^2-x+3)$
+        </div>
+        <div class="answer">답: (1) $(x+1)(x-1)(x^2+4)$ &nbsp; (2) $(x^2+x+3)(x^2-x+3)$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 3: $(x^2-2x)^2-11(x^2-2x)+24$를 인수분해하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, $x^2-2x$가 반복되니까 이걸 $X$로 놓자!</p>
+        <div class="step">
+          $X^2-11X+24 = (X-3)(X-8)$<br>
+          $X$를 $x^2-2x$로 돌려놓으면:<br>
+          $= (x^2-2x-3)(x^2-2x-8)$<br>
+          각각 더 인수분해하면:<br>
+          $= (x-3)(x+1)(x-4)(x+2)$
+        </div>
+        <div class="answer">답: $(x-3)(x+1)(x-4)(x+2)$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 4: 다음 식을 인수분해하시오. (1) $x^4-10x^2+9$ &nbsp; (2) $x^4-8x^2+4$</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p><b>(1)</b> 지원아, $x^2=X$로 놓으면 $X^2-10X+9$!</p>
+        <div class="step">
+          $(X-1)(X-9) = (x^2-1)(x^2-9)$<br>
+          $= (x+1)(x-1)(x+3)(x-3)$
+        </div>
+        <p><b>(2)</b> 지원아, 이건 완전제곱식을 만들어서 합차공식으로!</p>
+        <div class="step">
+          $x^4-8x^2+4 = (x^4-4x^2+4)-4x^2 = (x^2-2)^2-(2x)^2$<br>
+          $= (x^2+2x-2)(x^2-2x-2)$
+        </div>
+        <div class="answer">답: (1) $(x+1)(x-1)(x+3)(x-3)$<br>(2) $(x^2+2x-2)(x^2-2x-2)$</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- 3-2 인수정리를 이용한 인수분해 -->
+<div class="concept" id="s3-2">
+  <h2>3-2. 인수정리를 이용한 인수분해</h2>
+
+  <div class="analogy">
+    <br>
+    지원아, 3차 이상의 다항식을 인수분해할 때는 이 <b>3단계</b>를 따라가면 돼!<br><br>
+    <b>1단계:</b> 상수항의 약수(±1, ±2, ...)를 $x$에 하나씩 넣어봐<br>
+    <b>2단계:</b> $P(a)=0$이 되는 $a$를 찾으면 → $(x-a)$가 인수!<br>
+    <b>3단계:</b> 조립제법으로 나누어서 나머지 부분을 구해!<br><br>
+    레시피 같지? "상수항 약수 대입 → 0 찾기 → 조립제법!" 이 순서야!
+  </div>
+
+  <div class="example">
+    <h4>예제 4: $P(x) = x^3+x^2-10x+8$을 인수분해하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 위의 3단계를 그대로 따라가자!</p>
+        <div class="step">
+          <b>1단계:</b> 상수항 $8$의 약수: $\pm 1, \pm 2, \pm 4, \pm 8$<br>
+          <b>2단계:</b> $P(1) = 1+1-10+8 = 0$ ✓ → $(x-1)$이 인수!<br><br>
+          <b>3단계:</b> 조립제법으로 나누기:
+          <pre style="font-family: monospace; font-size: 1.1em; background: #f7fafc; padding: 12px; border-radius: 6px;">
+  1 │ 1    1   -10    8
+    │      1     2   -8
+    ├──────────────────
+      1    2    -8    0
+          </pre>
+          $x^3+x^2-10x+8 = (x-1)(x^2+2x-8)$<br>
+          $x^2+2x-8$도 인수분해 가능!<br>
+          $= (x-1)(x-2)(x+4)$
+        </div>
+        <div class="answer">답: $(x-1)(x-2)(x+4)$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 5: 다음 식을 인수분해하시오.</h4>
+    <p>(1) $x^3+4x^2+x-6$</p>
+    <p>(2) $x^4-5x^3+5x^2+5x-6$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p><b>(1)</b> 지원아, 상수항 $-6$의 약수부터 대입해보자!</p>
+        <div class="step">
+          $P(1) = 1+4+1-6 = 0$ ✓ 빙고!<br>
+          조립제법:
+          <pre style="font-family: monospace; font-size: 1.1em; background: #f7fafc; padding: 12px; border-radius: 6px;">
+  1 │ 1    4    1   -6
+    │      1    5    6
+    ├──────────────────
+      1    5    6    0
+          </pre>
+          $= (x-1)(x^2+5x+6) = (x-1)(x+2)(x+3)$
+        </div>
+        <p><b>(2)</b> 지원아, 4차식도 같은 방법이야! 인수를 두 번 찾으면 돼!</p>
+        <div class="step">
+          $P(1) = 1-5+5+5-6 = 0$ ✓<br>
+          조립제법으로 $(x-1)$ 빼면: $(x-1)(x^3-4x^2+x+6)$<br><br>
+          $Q(x) = x^3-4x^2+x+6$에서 $Q(-1) = -1-4-1+6 = 0$ ✓<br>
+          $(x+1)$을 빼면: $(x+1)(x^2-5x+6) = (x+1)(x-2)(x-3)$<br><br>
+          최종: $(x-1)(x+1)(x-2)(x-3)$
+        </div>
+        <div class="answer">답: (1) $(x-1)(x+2)(x+3)$<br>(2) $(x-1)(x+1)(x-2)(x-3)$</div>
+      </div>
+    </details>
+  </div>
+
+  <h3>최고차항의 계수가 1이 아닌 경우</h3>
+
+  <div class="tip">
+    <br>
+    지원아, 최고차항 계수가 1이 아닐 때는 후보가 좀 더 많아!<br>
+    $P(a)=0$이 되는 $a$를 $\pm\dfrac{\text{(상수항의 약수)}}{\text{(최고차항 계수의 약수)}}$ 에서 찾아봐!<br>
+    예를 들어 $2x^3+...+1$이면 $\pm 1, \pm\frac{1}{2}$도 시도해봐야 해!
+  </div>
+
+  <div class="example">
+    <h4>역량키우기: $P(x) = 3x^3-7x^2+11x-3$의 인수를 찾고, 인수분해해 보자.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 최고차항 계수가 3이니까 분수 후보도 봐야 해!</p>
+        <div class="step">
+          후보: $\pm 1, \pm 3, \pm\frac{1}{3}$<br><br>
+          $P\!\left(\frac{1}{3}\right) = \frac{1}{9} - \frac{7}{9} + \frac{33}{9} - \frac{27}{9} = 0$ ✓<br><br>
+          조립제법 ($a=\frac{1}{3}$):
+          <pre style="font-family: monospace; font-size: 1.1em; background: #f7fafc; padding: 12px; border-radius: 6px;">
+ 1/3 │ 3   -7    11   -3
+     │      1    -2    3
+     ├───────────────────
+       3   -6     9    0
+          </pre>
+          $= (x-\frac{1}{3})(3x^2-6x+9) = (3x-1)(x^2-2x+3)$
+        </div>
+        <div class="answer">답: $(3x-1)(x^2-2x+3)$</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- ===================== 종합 복습 ===================== -->
+<div class="chapter" id="review" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
+  지원아, 최종 보스! 종합 복습 문제
+</div>
+
+<div class="concept">
+  <h2>종합 문제 - 지원아, 여기까지 오다니 대단해!</h2>
+
+  <div class="example">
+    <h4>01. $A=3x^2-xy+y^2$, $B=x^2+2xy-3y^2$일 때, $A-X=2B$를 만족시키는 $X$는?</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, $X$를 이항하면 $X = A - 2B$야!</p>
+        <div class="step">
+          $X = (3x^2-xy+y^2) - 2(x^2+2xy-3y^2)$<br>
+          $= 3x^2-xy+y^2-2x^2-4xy+6y^2$<br>
+          $= x^2-5xy+7y^2$
+        </div>
+        <div class="answer">답: ④ $x^2-5xy+7y^2$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>03. $a+b+c=1$, $ab+bc+ca=-2$일 때, $a^2+b^2+c^2$의 값은?</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, $(a+b+c)^2$ 공식을 역으로 써보자!</p>
+        <div class="step">
+          $(a+b+c)^2 = a^2+b^2+c^2+2(ab+bc+ca)$<br>
+          $1^2 = a^2+b^2+c^2 + 2(-2)$<br>
+          $1 = a^2+b^2+c^2 - 4$<br>
+          $a^2+b^2+c^2 = 5$
+        </div>
+        <div class="answer">답: ⑤ $5$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>04. $x+\dfrac{1}{x}=3$일 때, $x^3+\dfrac{1}{x^3}$의 값은?</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 양변을 세제곱하면 공식으로 풀 수 있어!</p>
+        <div class="step">
+          $\left(x+\frac{1}{x}\right)^3 = x^3 + 3x + \frac{3}{x} + \frac{1}{x^3}$<br>
+          $= x^3 + \frac{1}{x^3} + 3\left(x+\frac{1}{x}\right)$<br><br>
+          $27 = x^3+\frac{1}{x^3}+9$<br>
+          $x^3+\frac{1}{x^3} = 18$
+        </div>
+        <div class="answer">답: ③ $18$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>07. $2025^{10}+2025^5+2028$을 $2026$으로 나누었을 때의 나머지는?</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 큰 수에 겁먹지 마! $x = 2025$로 놓으면 다항식이 돼!</p>
+        <div class="step">
+          $x = 2025$로 놓으면 $2026 = x+1$이야<br>
+          $P(x) = x^{10}+x^5+x+3$을 $x+1$로 나눈 나머지<br>
+          $= P(-1) = (-1)^{10}+(-1)^5+(-1)+3 = 1-1-1+3 = 2$
+        </div>
+        <div class="answer">답: ③ $2$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>10. 삼각형 ABC의 세 변의 길이가 $a, b, c$이고, $a^3+b^3+a^2b+ab^2-ac^2-bc^2=0$을 만족시킬 때, 어떤 삼각형인가?</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 인수분해해서 숨은 의미를 찾아보자!</p>
+        <div class="step">
+          $a^2(a+b)+b^2(a+b)-c^2(a+b)$<br>
+          $= (a+b)(a^2+b^2-c^2)$<br><br>
+          삼각형이니까 $a+b > 0$<br>
+          따라서 $a^2+b^2-c^2 = 0$, 즉 $a^2+b^2 = c^2$<br>
+          지원아, 이거 어디서 본 적 있지? <b>피타고라스 정리</b>야!<br>
+          → 빗변의 길이가 $c$인 <b>직각삼각형!</b>
+        </div>
+        <div class="answer">답: ⑤ 빗변의 길이가 $c$인 직각삼각형</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>13. $x(x+2)(x+4)(x+6)+a$가 이차식의 제곱 꼴로 인수분해되도록 하는 상수 $a$의 값은?</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 이런 문제는 <b>바깥 둘, 안쪽 둘</b>을 먼저 묶는 게 핵심이야!</p>
+        <div class="step">
+          $\{x(x+6)\}\{(x+2)(x+4)\}+a$<br>
+          $= (x^2+6x)(x^2+6x+8)+a$<br><br>
+          $t = x^2+6x$으로 놓으면:<br>
+          $t(t+8)+a = t^2+8t+a$<br><br>
+          완전제곱식이 되려면:<br>
+          $t^2+8t+a = (t+4)^2 = t^2+8t+16$<br>
+          따라서 $a = 16$
+        </div>
+        <div class="answer">답: ③ $16$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>15. $(a+b+c)(a+b-c)+(a-b+c)(-a+b+c)$을 간단히 하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 합차공식을 두 번 쓸 수 있어!</p>
+        <div class="step">
+          앞부분: $A=a+b$로 놓으면 $(A+c)(A-c) = A^2-c^2 = (a+b)^2-c^2$<br><br>
+          뒷부분: $(a-b+c)(-a+b+c)$에서 $B=a-b, C=c$로 보면<br>
+          아니, $D=c$, $E=a-b$로 보면: $(E+D)(-E+D) = D^2-E^2 = c^2-(a-b)^2$<br><br>
+          합하면: $(a+b)^2-c^2+c^2-(a-b)^2$<br>
+          $= (a+b)^2-(a-b)^2 = 4ab$<br>
+          지원아, 신기하지? 이렇게 깔끔하게 $4ab$가 돼!
+        </div>
+        <div class="answer">답: $4ab$</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- 핵심 공식 총정리 -->
+<div class="concept">
+  <h2>지원이의 최종 정리 노트</h2>
+
+  <div class="formula-box">
+    <h4>다항식의 연산</h4>
+    <p>덧셈: 동류항끼리 모아서 정리</p>
+    <p>뺄셈: $A-B = A+(-B)$ (부호 뒤집어서 더하기!)</p>
+    <p>곱셈: 분배법칙으로 전개 → 동류항 정리</p>
+    <p>나눗셈: $A = BQ + R$ (나머지 차수 &lt; 나누는 식 차수)</p>
+    <p>조립제법: 계수만으로 빠르게! (빠진 차수는 0 넣기!)</p>
+  </div>
+
+  <div class="formula-box">
+    <h4>곱셈 공식 (시험 단골!)</h4>
+    <p>$(a+b+c)^2 = a^2+b^2+c^2+2ab+2bc+2ca$</p>
+    <p>$(a+b)^3 = a^3+3a^2b+3ab^2+b^3$ ← "일삼삼일"</p>
+    <p>$(a-b)^3 = a^3-3a^2b+3ab^2-b^3$ ← 부호 번갈아!</p>
+    <p>$(a+b)(a^2-ab+b^2) = a^3+b^3$</p>
+    <p>$(a-b)(a^2+ab+b^2) = a^3-b^3$</p>
+  </div>
+
+  <div class="formula-box">
+    <h4>항등식과 나머지정리</h4>
+    <p>항등식: 양변의 계수 비교 또는 수 대입</p>
+    <p>나머지정리: $P(x)$를 $x-a$로 나눈 나머지 = $P(a)$</p>
+    <p>인수정리: $P(a)=0$ ↔ $(x-a)$로 나누어떨어짐</p>
+  </div>
+
+  <div class="formula-box">
+    <h4>인수분해 3가지 방법</h4>
+    <p>방법 1: 인수분해 공식 활용 (패턴 매칭!)</p>
+    <p>방법 2: 공통부분을 $X$로 치환해서 쉬운 식으로!</p>
+    <p>방법 3: 상수항 약수 대입 → 인수정리 → 조립제법</p>
+  </div>
+</div>
+
+<div style="text-align:center; padding: 30px; color: #a0aec0; font-size: 0.9em;">
+  <p>지원아, 여기까지 다 읽었으면 다항식은 이제 정복한 거야! 화이팅!</p>
+  <p><a href="#top" style="color: #667eea;">맨 위로 돌아가기</a></p>
+</div>
+
+</div><!-- /container -->
+</body>
+</html>

@@ -1,0 +1,8 @@
+.DS_Store
+a/
+b/
+프롬프트_수학교재.md
+.env
+credentials.json
+token.json
+.tmp/

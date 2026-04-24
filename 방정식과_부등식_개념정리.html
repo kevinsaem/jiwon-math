@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>지원이의 방정식과 부등식 완벽 정리</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  background: #f0f4f8; color: #2d3748; line-height: 1.8;
+}
+.container { max-width: 900px; margin: 0 auto; padding: 20px; }
+header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white; text-align: center; padding: 40px 20px; border-radius: 16px;
+  margin-bottom: 30px; box-shadow: 0 10px 30px rgba(102,126,234,0.3);
+}
+header h1 { font-size: 2.2em; margin-bottom: 10px; }
+header p { font-size: 1.1em; opacity: 0.9; }
+
+.nav {
+  background: white; border-radius: 12px; padding: 20px; margin-bottom: 30px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+.nav h3 { color: #667eea; margin-bottom: 12px; font-size: 1.2em; }
+.nav ul { list-style: none; }
+.nav li { margin: 6px 0; }
+.nav a {
+  color: #4a5568; text-decoration: none; padding: 4px 8px; border-radius: 6px;
+  transition: all 0.2s;
+}
+.nav a:hover { background: #edf2f7; color: #667eea; }
+
+.chapter {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  color: #1a4731; padding: 24px 30px; border-radius: 12px;
+  margin: 40px 0 20px; font-size: 1.5em; font-weight: 700;
+  box-shadow: 0 4px 15px rgba(67,233,123,0.3);
+}
+.chapter.ch2 { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: #5a1a2a; }
+.chapter.ch3 { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); color: #3d1f5c; }
+.chapter.ch4 { background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%); color: #2d3a6e; }
+.chapter.ch5 { background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); color: #5a3a1a; }
+
+.concept {
+  background: white; border-radius: 12px; padding: 28px; margin-bottom: 24px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06); border-left: 5px solid #667eea;
+}
+.concept h2 {
+  color: #667eea; font-size: 1.4em; margin-bottom: 16px;
+  padding-bottom: 10px; border-bottom: 2px dashed #e2e8f0;
+}
+.concept h3 { color: #4a5568; font-size: 1.15em; margin: 18px 0 10px; }
+
+.analogy {
+  background: #fffbeb; border: 2px solid #f6e05e; border-radius: 10px;
+  padding: 18px 20px; margin: 16px 0; position: relative;
+}
+.analogy::before {
+  content: '지원아, 이렇게 생각해봐!'; position: absolute; top: -12px; left: 16px;
+  background: #f6e05e; color: #744210; padding: 2px 12px; border-radius: 20px;
+  font-size: 0.85em; font-weight: 700;
+}
+
+.formula-box {
+  background: linear-gradient(135deg, #ebf4ff 0%, #f0e7ff 100%);
+  border: 2px solid #b794f4; border-radius: 10px; padding: 20px;
+  margin: 16px 0; text-align: center;
+}
+.formula-box h4 { color: #553c9a; margin-bottom: 10px; }
+
+.example {
+  background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 10px;
+  padding: 20px; margin: 16px 0;
+}
+.example h4 {
+  color: #2b6cb0; margin-bottom: 10px; font-size: 1.05em;
+  display: flex; align-items: center; gap: 8px;
+}
+.example h4::before {
+  content: 'Q'; background: #3182ce; color: white; width: 28px; height: 28px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 0.9em; font-weight: 700; flex-shrink: 0;
+}
+
+.solution { margin-top: 12px; }
+.solution summary {
+  background: #edf2f7; padding: 10px 16px; border-radius: 8px; cursor: pointer;
+  font-weight: 600; color: #4a5568; transition: background 0.2s; list-style: none;
+}
+.solution summary:hover { background: #e2e8f0; }
+.solution summary::before { content: '풀이 보기 (먼저 풀어보고 클릭!) '; }
+.solution[open] summary::before { content: '풀이 접기 '; }
+.solution .sol-content {
+  padding: 16px; background: #fafafa; border-radius: 0 0 8px 8px;
+  border: 1px solid #e2e8f0; border-top: none; margin-top: -4px;
+}
+.step { margin: 8px 0; padding-left: 12px; border-left: 3px solid #cbd5e0; }
+.answer {
+  background: #ebf8ff; border: 1px solid #90cdf4; border-radius: 8px;
+  padding: 10px 16px; margin-top: 12px; font-weight: 600; color: #2b6cb0;
+}
+
+.tip {
+  background: #f0fff4; border: 1px solid #9ae6b4; border-radius: 10px;
+  padding: 16px 20px; margin: 16px 0; position: relative;
+}
+.tip::before {
+  content: '지원이만의 꿀팁!'; position: absolute; top: -10px; left: 16px;
+  background: #38a169; color: white; padding: 2px 12px; border-radius: 20px;
+  font-size: 0.8em; font-weight: 700;
+}
+
+hr { border: none; border-top: 2px dashed #e2e8f0; margin: 30px 0; }
+
+.final-review {
+  background: white; border-radius: 12px; padding: 28px; margin: 30px 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06); border-left: 5px solid #e53e3e;
+}
+.final-review h2 { color: #e53e3e; font-size: 1.4em; margin-bottom: 16px; }
+
+.ending {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white; text-align: center; padding: 40px 20px; border-radius: 16px;
+  margin-top: 40px; font-size: 1.2em;
+}
+
+@media (max-width: 600px) {
+  .container { padding: 12px; }
+  header h1 { font-size: 1.6em; }
+  .concept { padding: 18px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>지원이의 방정식과 부등식 완벽 정리</h1>
+  <p>지원아, 이 교재만 읽으면 방정식과 부등식은 걱정 없어! 천천히 따라와 봐~</p>
+</header>
+
+<div class="nav" id="top">
+  <h3>목차 - 지원이의 학습 로드맵</h3>
+  <ul>
+    <li><a href="#s1">1단원: 복소수와 그 연산</a></li>
+    <li>&nbsp;&nbsp;<a href="#s1-1">1-1. 복소수란 무엇일까?</a></li>
+    <li>&nbsp;&nbsp;<a href="#s1-2">1-2. 서로 같은 복소수</a></li>
+    <li>&nbsp;&nbsp;<a href="#s1-3">1-3. 켤레복소수</a></li>
+    <li>&nbsp;&nbsp;<a href="#s1-4">1-4. 복소수의 사칙연산</a></li>
+    <li>&nbsp;&nbsp;<a href="#s1-5">1-5. 음수의 제곱근</a></li>
+    <li><a href="#s2">2단원: 이차방정식의 판별식</a></li>
+    <li>&nbsp;&nbsp;<a href="#s2-1">2-1. 실근과 허근</a></li>
+    <li>&nbsp;&nbsp;<a href="#s2-2">2-2. 판별식</a></li>
+    <li><a href="#s3">3단원: 이차방정식의 근과 계수의 관계</a></li>
+    <li>&nbsp;&nbsp;<a href="#s3-1">3-1. 근과 계수의 관계</a></li>
+    <li>&nbsp;&nbsp;<a href="#s3-2">3-2. 두 수를 근으로 하는 이차방정식</a></li>
+    <li><a href="#s4">4단원: 이차방정식과 이차함수의 관계</a></li>
+    <li>&nbsp;&nbsp;<a href="#s4-1">4-1. 이차함수의 그래프와 x축</a></li>
+    <li>&nbsp;&nbsp;<a href="#s4-2">4-2. 이차함수의 그래프와 직선의 위치 관계</a></li>
+    <li><a href="#s5">5단원: 이차함수의 최대, 최소</a></li>
+    <li>&nbsp;&nbsp;<a href="#s5-1">5-1. 제한된 범위에서 최댓값과 최솟값</a></li>
+    <li>&nbsp;&nbsp;<a href="#s5-2">5-2. 최대, 최소의 활용</a></li>
+    <li><a href="#review">핵심 공식 총정리</a></li>
+  </ul>
+</div>
+
+<!-- ===================== 1단원 ===================== -->
+<div class="chapter" id="s1">1단원: 복소수와 그 연산</div>
+
+<div class="concept" id="s1-1">
+  <h2>1-1. 복소수란 무엇일까?</h2>
+
+  <div class="analogy">
+    <br>
+    지원아, 수의 세계가 점점 넓어지고 있어!<br>
+    초등학교 때는 자연수(1, 2, 3...)만 알았고, 중학교에서 음수(-1, -2...)와 무리수($\sqrt{2}$)를 배웠잖아.<br>
+    그런데 $x^2 = -1$을 만족하는 수는? 실수 중에는 없어! 어떤 수를 제곱해도 양수나 0이 되니까.<br><br>
+    그래서 수학자들이 <b>"제곱하면 -1이 되는 새로운 수"</b>를 만들었어. 이걸 $i$라고 불러!<br>
+    마치 게임에서 새로운 맵이 열리는 것처럼, 수의 세계가 한 단계 더 확장되는 거야.
+  </div>
+
+  <h3>허수단위 $i$</h3>
+  <p>$i^2 = -1$을 만족하는 수 $i$를 <b>허수단위</b>라고 해.</p>
+  <p>즉 $i = \sqrt{-1}$이야.</p>
+
+  <h3>복소수의 뜻</h3>
+  <p>지원아, 임의의 두 실수 $a$, $b$에 대하여</p>
+  <p style="text-align:center; font-size:1.2em;"><b>$a + bi$</b></p>
+  <p>꼴로 나타내어지는 수를 <b>복소수</b>라고 해!</p>
+  <ul>
+    <li>$a$: <b>실수부분</b> (real part)</li>
+    <li>$b$: <b>허수부분</b> (imaginary part)</li>
+  </ul>
+
+  <div class="formula-box">
+    <h4>지원아, 이것만 기억해!</h4>
+    <p>복소수 $a+bi$ ($a$, $b$는 실수)</p>
+    <p>$b=0$이면 → <b>실수</b> ($a$)</p>
+    <p>$b \neq 0$이면 → <b>허수</b></p>
+    <p>실수도 복소수야! $a = a + 0i$로 쓸 수 있으니까!</p>
+  </div>
+
+  <div class="tip">
+    <br>
+    $-3$도 복소수야! $-3 = (-3) + 0 \times i$로 생각하면 돼.<br>
+    $3+2i$에서 실수부분은 3, 허수부분은 2야.<br>
+    $-2i$에서 실수부분은 0, 허수부분은 -2야.<br>
+    $2\sqrt{5}$에서 실수부분은 $2\sqrt{5}$, 허수부분은 0이야 (이건 실수!).
+  </div>
+
+  <div class="example">
+    <h4>문제 1: 다음 복소수의 실수부분과 허수부분을 구하시오.</h4>
+    <p>(1) $2+\sqrt{3}i$ &nbsp;&nbsp; (2) $3-i$ &nbsp;&nbsp; (3) $-2i$ &nbsp;&nbsp; (4) $2\sqrt{5}$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, $a+bi$ 꼴에서 $a$가 실수부분, $b$가 허수부분이야!</p>
+        <div class="step">
+          (1) $2+\sqrt{3}i$: 실수부분 = $2$, 허수부분 = $\sqrt{3}$<br>
+          (2) $3-i = 3+(-1)i$: 실수부분 = $3$, 허수부분 = $-1$<br>
+          (3) $-2i = 0+(-2)i$: 실수부분 = $0$, 허수부분 = $-2$<br>
+          (4) $2\sqrt{5} = 2\sqrt{5}+0i$: 실수부분 = $2\sqrt{5}$, 허수부분 = $0$
+        </div>
+        <div class="answer">답: (1) 실수부분 2, 허수부분 $\sqrt{3}$ (2) 실수부분 3, 허수부분 $-1$ (3) 실수부분 0, 허수부분 $-2$ (4) 실수부분 $2\sqrt{5}$, 허수부분 0</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<div class="concept" id="s1-2">
+  <h2>1-2. 서로 같은 복소수</h2>
+
+  <div class="analogy">
+    <br>
+    지원아, 좌표를 생각해봐!<br>
+    점 $(3, 5)$와 점 $(3, 5)$이 같으려면 $x$좌표도 같고 $y$좌표도 같아야 하잖아?<br>
+    복소수도 마찬가지야! $a+bi = c+di$가 되려면 실수부분끼리, 허수부분끼리 각각 같아야 해!
+  </div>
+
+  <div class="formula-box">
+    <h4>지원아, 이것만 기억해!</h4>
+    <p>두 복소수 $a+bi$, $c+di$ ($a, b, c, d$는 실수)가 서로 같으면</p>
+    <p>$a+bi = c+di$ &nbsp; $\Leftrightarrow$ &nbsp; $a=c$이고 $b=d$</p>
+    <p>특히 $a+bi = 0$이면 $a=0$, $b=0$</p>
+  </div>
+
+  <div class="example">
+    <h4>예제 1: 다음 등식을 만족시키는 실수 $x$, $y$의 값을 구하시오.</h4>
+    <p>$(x-2y)+(3x+y)i = 4+5i$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 실수부분끼리, 허수부분끼리 비교하면 돼!</p>
+        <div class="step">
+          두 복소수가 서로 같으려면 실수부분과 허수부분이 각각 같아야 하므로<br>
+          $x - 2y = 4$ &nbsp; ... ①<br>
+          $3x + y = 5$ &nbsp; ... ②<br><br>
+          ①, ②을 연립하여 풀면<br>
+          $x = 2$, $y = -1$
+        </div>
+        <div class="answer">답: $x=2$, $y=-1$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 2: 다음 등식을 만족시키는 실수 $x$, $y$의 값을 구하시오.</h4>
+    <p>(1) $x+yi = 1-5i$ &nbsp;&nbsp; (2) $2x-yi = 4+\sqrt{6}i$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 실수부분=실수부분, 허수부분=허수부분으로 비교해!</p>
+        <div class="step">
+          <b>(1)</b> $x = 1$, $y = -5$<br><br>
+          <b>(2)</b> $2x = 4$이므로 $x = 2$, $-y = \sqrt{6}$이므로 $y = -\sqrt{6}$
+        </div>
+        <div class="answer">답: (1) $x=1$, $y=-5$ &nbsp; (2) $x=2$, $y=-\sqrt{6}$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 3: 다음 등식을 만족시키는 실수 $x$, $y$의 값을 구하시오.</h4>
+    <p>(1) $(2x-1)+(y-2)i = 3+i$ &nbsp;&nbsp; (2) $(x+y+2)-(3x+y)i = 0$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p><b>(1)</b> 지원아, 실수부분과 허수부분을 비교하자!</p>
+        <div class="step">
+          $2x-1 = 3$ → $x = 2$<br>
+          $y-2 = 1$ → $y = 3$
+        </div>
+        <p><b>(2)</b> 지원아, 오른쪽이 0이면 $0+0i$라는 뜻이야!</p>
+        <div class="step">
+          $x+y+2 = 0$ &nbsp; ... ①<br>
+          $-(3x+y) = 0$, 즉 $3x+y = 0$ &nbsp; ... ②<br>
+          ①-②: $-2x+2 = 0$ → $x = 1$<br>
+          ②에서 $y = -3$
+        </div>
+        <div class="answer">답: (1) $x=2$, $y=3$ &nbsp; (2) $x=1$, $y=-3$</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<div class="concept" id="s1-3">
+  <h2>1-3. 켤레복소수</h2>
+
+  <div class="analogy">
+    <br>
+    지원아, 거울을 생각해봐!<br>
+    거울에 비친 나는 좌우가 반대이듯, 켤레복소수는 <b>허수부분의 부호만 반대</b>인 짝꿍이야!<br>
+    $3+2i$의 거울 속 모습 → $3-2i$ (허수부분 부호만 뒤집기!)
+  </div>
+
+  <div class="formula-box">
+    <h4>지원아, 이것만 기억해!</h4>
+    <p>복소수 $a+bi$의 <b>켤레복소수</b>: $\overline{a+bi} = a-bi$</p>
+    <p>또한 $\overline{a-bi} = a+bi$</p>
+    <p>두 복소수 $a+bi$와 $a-bi$는 서로 켤레복소수!</p>
+  </div>
+
+  <div class="tip">
+    <br>
+    켤레복소수가 자기 자신과 같은 수는? $\overline{z} = z$이면 허수부분이 0, 즉 <b>실수</b>야!<br>
+    예: $\overline{5} = 5$, $\overline{-3} = -3$ (실수의 켤레복소수는 자기 자신!)
+  </div>
+
+  <div class="example">
+    <h4>문제 4: 다음 복소수의 켤레복소수를 구하시오.</h4>
+    <p>(1) $3+2i$ &nbsp;&nbsp; (2) $3-2i$ &nbsp;&nbsp; (3) $-3i$ &nbsp;&nbsp; (4) $1+\sqrt{3}$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 허수부분의 부호만 뒤집으면 돼!</p>
+        <div class="step">
+          (1) $\overline{3+2i} = 3-2i$<br>
+          (2) $\overline{3-2i} = 3+2i$<br>
+          (3) $\overline{-3i} = \overline{0+(-3)i} = 0+3i = 3i$<br>
+          (4) $1+\sqrt{3}$은 실수이므로 켤레복소수는 자기 자신: $1+\sqrt{3}$
+        </div>
+        <div class="answer">답: (1) $3-2i$ (2) $3+2i$ (3) $3i$ (4) $1+\sqrt{3}$</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<div class="concept" id="s1-4">
+  <h2>1-4. 복소수의 사칙연산</h2>
+
+  <div class="analogy">
+    <br>
+    지원아, 복소수 계산은 문자 계산이랑 똑같아!<br>
+    $i$를 그냥 문자 $x$처럼 생각하고 계산하면 돼. 단 하나 다른 점은 <b>$i^2$이 나오면 $-1$로 바꿔</b>주는 것뿐이야!<br>
+    $(2+3x) + (1+5x) = 3+8x$ 처럼 → $(2+3i) + (1+5i) = 3+8i$ 이렇게!
+  </div>
+
+  <h3>덧셈과 뺄셈</h3>
+  <div class="formula-box">
+    <h4>복소수의 덧셈과 뺄셈</h4>
+    <p>$a, b, c, d$가 실수일 때</p>
+    <p><b>덧셈:</b> $(a+bi)+(c+di) = (a+c)+(b+d)i$</p>
+    <p><b>뺄셈:</b> $(a+bi)-(c+di) = (a-c)+(b-d)i$</p>
+    <p>실수부분끼리, 허수부분끼리 계산!</p>
+  </div>
+
+  <div class="example">
+    <h4>문제 5: 다음을 계산하시오.</h4>
+    <p>(1) $(3+2i)+(2-3i)$ &nbsp;&nbsp; (2) $(3-3i)-(-2+i)$ &nbsp;&nbsp; (3) $(2+\sqrt{7}i)-(2-\sqrt{7}i)$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 실수부분끼리, 허수부분끼리 각각 계산하면 돼!</p>
+        <div class="step">
+          <b>(1)</b> $(3+2)+(2-3)i = 5-i$<br><br>
+          <b>(2)</b> $(3-(-2))+(-3-1)i = 5-4i$<br><br>
+          <b>(3)</b> $(2-2)+(\sqrt{7}-(-\sqrt{7}))i = 0+2\sqrt{7}i = 2\sqrt{7}i$
+        </div>
+        <div class="answer">답: (1) $5-i$ &nbsp; (2) $5-4i$ &nbsp; (3) $2\sqrt{7}i$</div>
+      </div>
+    </details>
+  </div>
+
+  <h3>곱셈</h3>
+  <div class="formula-box">
+    <h4>복소수의 곱셈</h4>
+    <p>$a, b, c, d$가 실수일 때</p>
+    <p>$(a+bi)(c+di) = (ac-bd)+(ad+bc)i$</p>
+    <p>$i$를 문자처럼 전개하고, $i^2 = -1$을 대입!</p>
+  </div>
+
+  <div class="example">
+    <h4>예제 2: 다음을 계산하시오.</h4>
+    <p>(1) $(2+3i)(4+i)$ &nbsp;&nbsp; (2) $(3+i)(3-i)$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 분배법칙으로 전개하고 $i^2=-1$을 이용하면 돼!</p>
+        <div class="step">
+          <b>(1)</b> $(2+3i)(4+i)$<br>
+          $= 8+2i+12i+3i^2$<br>
+          $= 8+(2+12)i+3\times(-1)$<br>
+          $= 5+14i$
+        </div>
+        <div class="step">
+          <b>(2)</b> $(3+i)(3-i)$<br>
+          $= 9-3i+3i-i^2$<br>
+          $= 9+(-3+3)i-(-1)$<br>
+          $= 10$
+        </div>
+        <div class="answer">답: (1) $5+14i$ &nbsp; (2) $10$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="tip">
+    <br>
+    $(a+bi)(a-bi) = a^2+b^2$ (항상 실수가 돼!)<br>
+    이건 켤레복소수끼리 곱하면 항상 실수가 된다는 뜻이야. 나눗셈에서 엄청 유용해!
+  </div>
+
+  <div class="example">
+    <h4>문제 6: 다음을 계산하시오.</h4>
+    <p>(1) $(2+i)(1-3i)$ &nbsp;&nbsp; (2) $(1+2i)(1-2i)$ &nbsp;&nbsp; (3) $(\sqrt{3}+\sqrt{2}i)(\sqrt{3}-\sqrt{2}i)$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <div class="step">
+          <b>(1)</b> $= 2-6i+i-3i^2 = 2-5i-3(-1) = 5-5i$<br><br>
+          <b>(2)</b> 켤레복소수끼리의 곱! $= 1^2+(2)^2 = 1+4 = 5$<br><br>
+          <b>(3)</b> 역시 켤레복소수! $= (\sqrt{3})^2+(\sqrt{2})^2 = 3+2 = 5$
+        </div>
+        <div class="answer">답: (1) $5-5i$ &nbsp; (2) $5$ &nbsp; (3) $5$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 7: 허수단위 $i$의 거듭제곱 $i^3, i^4, i^5, \ldots, i^{12}$의 값을 구하고, $i^n$의 값의 규칙성을 말하시오. (단, $n$은 자연수)</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, $i$의 거듭제곱은 4개씩 반복돼! 한번 차근차근 계산해보자.</p>
+        <div class="step">
+          $i^1 = i$<br>
+          $i^2 = -1$<br>
+          $i^3 = i^2 \times i = -1 \times i = -i$<br>
+          $i^4 = i^2 \times i^2 = (-1)(-1) = 1$<br>
+          $i^5 = i^4 \times i = 1 \times i = i$<br>
+          $i^6 = i^4 \times i^2 = 1 \times (-1) = -1$<br>
+          ... 이렇게 $i, -1, -i, 1$이 <b>4개씩 반복</b>돼!
+        </div>
+        <div class="answer">답: $i^n$의 값은 $n$을 4로 나눈 나머지에 따라 결정. 나머지가 1→$i$, 2→$-1$, 3→$-i$, 0→$1$</div>
+      </div>
+    </details>
+  </div>
+
+  <h3>나눗셈</h3>
+  <div class="formula-box">
+    <h4>복소수의 나눗셈</h4>
+    <p>$a, b, c, d$가 실수이고 $c+di \neq 0$일 때</p>
+    <p>$\dfrac{a+bi}{c+di} = \dfrac{(a+bi)(c-di)}{(c+di)(c-di)} = \dfrac{ac+bd}{c^2+d^2}+\dfrac{bc-ad}{c^2+d^2}i$</p>
+    <p>분모의 <b>켤레복소수</b>를 분모, 분자에 각각 곱해서 분모를 실수로 만들어!</p>
+  </div>
+
+  <div class="analogy">
+    <br>
+    지원아, 분모의 유리화 기억나지? $\frac{1}{\sqrt{2}} = \frac{\sqrt{2}}{2}$ 이렇게!<br>
+    복소수 나눗셈도 똑같은 원리야. 분모에 허수가 있으면, 분모의 켤레복소수를 곱해서 분모를 실수로 바꿔주는 거야!
+  </div>
+
+  <div class="example">
+    <h4>예제 3: $\dfrac{3+4i}{2-i}$를 계산하여 $a+bi$ 꼴로 나타내시오. (단, $a$, $b$는 실수)</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 분모의 켤레복소수 $2+i$를 위아래에 곱하자!</p>
+        <div class="step">
+          $\dfrac{3+4i}{2-i} = \dfrac{(3+4i)(2+i)}{(2-i)(2+i)}$<br><br>
+          분자: $(3+4i)(2+i) = 6+3i+8i+4i^2 = 6+11i-4 = 2+11i$<br>
+          분모: $(2-i)(2+i) = 4-i^2 = 4+1 = 5$<br><br>
+          $= \dfrac{2+11i}{5} = \dfrac{2}{5}+\dfrac{11}{5}i$
+        </div>
+        <div class="answer">답: $\dfrac{2}{5}+\dfrac{11}{5}i$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 8: 다음을 계산하여 $a+bi$ 꼴로 나타내시오. (단, $a$, $b$는 실수)</h4>
+    <p>(1) $\dfrac{1}{i}$ &nbsp;&nbsp; (2) $\dfrac{1}{\sqrt{3}-i}$ &nbsp;&nbsp; (3) $\dfrac{2\sqrt{2}+i}{2\sqrt{2}-i}$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 모두 분모의 켤레복소수를 곱해서 분모를 실수로 만들자!</p>
+        <div class="step">
+          <b>(1)</b> $\dfrac{1}{i} = \dfrac{1 \times (-i)}{i \times (-i)} = \dfrac{-i}{-i^2} = \dfrac{-i}{1} = -i$<br><br>
+          <b>(2)</b> $\dfrac{1}{\sqrt{3}-i} = \dfrac{\sqrt{3}+i}{(\sqrt{3}-i)(\sqrt{3}+i)} = \dfrac{\sqrt{3}+i}{3+1} = \dfrac{\sqrt{3}}{4}+\dfrac{1}{4}i$<br><br>
+          <b>(3)</b> $\dfrac{2\sqrt{2}+i}{2\sqrt{2}-i} = \dfrac{(2\sqrt{2}+i)^2}{(2\sqrt{2}-i)(2\sqrt{2}+i)} = \dfrac{8+4\sqrt{2}i+i^2}{8+1} = \dfrac{7+4\sqrt{2}i}{9} = \dfrac{7}{9}+\dfrac{4\sqrt{2}}{9}i$
+        </div>
+        <div class="answer">답: (1) $-i$ &nbsp; (2) $\dfrac{\sqrt{3}}{4}+\dfrac{1}{4}i$ &nbsp; (3) $\dfrac{7}{9}+\dfrac{4\sqrt{2}}{9}i$</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<div class="concept" id="s1-5">
+  <h2>1-5. 음수의 제곱근</h2>
+
+  <div class="analogy">
+    <br>
+    지원아, 중학교 때 $\sqrt{4} = 2$는 "제곱하면 4가 되는 양수"였잖아?<br>
+    그런데 $\sqrt{-4}$는? 실수에서는 불가능했는데, 이제 $i$를 배웠으니까 할 수 있어!<br>
+    $\sqrt{-4} = \sqrt{4} \times \sqrt{-1} = 2i$! 신기하지?
+  </div>
+
+  <div class="formula-box">
+    <h4>지원아, 이것만 기억해!</h4>
+    <p>$a > 0$일 때</p>
+    <p>$-a$의 제곱근은 $\sqrt{a}i$와 $-\sqrt{a}i$</p>
+    <p>$\sqrt{-a} = \sqrt{a}i$</p>
+  </div>
+
+  <div class="tip">
+    <br>
+    <b>주의!</b> 음수의 제곱근은 반드시 $\sqrt{a}i$ 꼴로 바꾼 다음에 계산해야 해!<br>
+    $\sqrt{-5}\sqrt{-5} = \sqrt{5}i \times \sqrt{5}i = 5i^2 = -5$ (O)<br>
+    $\sqrt{-5}\sqrt{-5} = \sqrt{(-5)(-5)} = \sqrt{25} = 5$ (X) ← 이렇게 하면 안 돼!<br>
+    $\sqrt{a}\sqrt{b} = \sqrt{ab}$는 $a \geq 0$, $b \geq 0$일 때만 성립해!
+  </div>
+
+  <div class="example">
+    <h4>문제 9: 다음 수의 제곱근을 구하시오.</h4>
+    <p>(1) $-25$ &nbsp;&nbsp; (2) $-64$ &nbsp;&nbsp; (3) $-54$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <div class="step">
+          <b>(1)</b> $-25$의 제곱근: $\pm\sqrt{25}i = \pm 5i$<br><br>
+          <b>(2)</b> $-64$의 제곱근: $\pm\sqrt{64}i = \pm 8i$<br><br>
+          <b>(3)</b> $-54$의 제곱근: $\pm\sqrt{54}i = \pm 3\sqrt{6}i$
+        </div>
+        <div class="answer">답: (1) $\pm 5i$ &nbsp; (2) $\pm 8i$ &nbsp; (3) $\pm 3\sqrt{6}i$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 10: 다음을 계산하여 $a+bi$ 꼴로 나타내시오. (단, $a$, $b$는 실수)</h4>
+    <p>(1) $\sqrt{-2}+\sqrt{-8}$ &nbsp;&nbsp; (2) $\sqrt{3}\sqrt{-27}$ &nbsp;&nbsp; (3) $\dfrac{\sqrt{-45}}{\sqrt{5}}$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 먼저 $\sqrt{-a} = \sqrt{a}i$로 바꾸고 나서 계산해!</p>
+        <div class="step">
+          <b>(1)</b> $\sqrt{-2}+\sqrt{-8} = \sqrt{2}i + 2\sqrt{2}i = 3\sqrt{2}i$<br><br>
+          <b>(2)</b> $\sqrt{3}\sqrt{-27} = \sqrt{3} \times 3\sqrt{3}i = 3 \times 3 \times i = 9i$<br><br>
+          <b>(3)</b> $\dfrac{\sqrt{-45}}{\sqrt{5}} = \dfrac{3\sqrt{5}i}{\sqrt{5}} = 3i$
+        </div>
+        <div class="answer">답: (1) $3\sqrt{2}i$ &nbsp; (2) $9i$ &nbsp; (3) $3i$</div>
+      </div>
+    </details>
+  </div>
+
+  <h3>스스로 확인하기</h3>
+
+  <div class="example">
+    <h4>확인 1: $\alpha=3+2i$, $\beta=3-2i$일 때, 다음을 계산하여 $a+bi$ 꼴로 나타내시오.</h4>
+    <p>(1) $\alpha+\beta$ &nbsp;&nbsp; (2) $\alpha\beta$ &nbsp;&nbsp; (3) $\dfrac{\alpha}{\beta}$ &nbsp;&nbsp; (4) $\alpha\bar{\alpha}+\beta\bar{\beta}$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <div class="step">
+          <b>(1)</b> $\alpha+\beta = (3+2i)+(3-2i) = 6$<br><br>
+          <b>(2)</b> $\alpha\beta = (3+2i)(3-2i) = 9-4i^2 = 9+4 = 13$<br><br>
+          <b>(3)</b> $\dfrac{\alpha}{\beta} = \dfrac{3+2i}{3-2i} = \dfrac{(3+2i)^2}{(3-2i)(3+2i)} = \dfrac{9+12i+4i^2}{13} = \dfrac{5+12i}{13} = \dfrac{5}{13}+\dfrac{12}{13}i$<br><br>
+          <b>(4)</b> $\bar{\alpha} = 3-2i = \beta$, $\bar{\beta} = 3+2i = \alpha$이므로<br>
+          $\alpha\bar{\alpha}+\beta\bar{\beta} = \alpha\beta + \beta\alpha = 2\alpha\beta = 2 \times 13 = 26$
+        </div>
+        <div class="answer">답: (1) $6$ (2) $13$ (3) $\dfrac{5}{13}+\dfrac{12}{13}i$ (4) $26$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>확인 2: 다음을 계산하여 $a+bi$ 꼴로 나타내시오.</h4>
+    <p>$\sqrt{-2}\sqrt{-18}+\dfrac{\sqrt{-18}}{\sqrt{-2}}-\dfrac{\sqrt{2}}{\sqrt{-18}}$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 먼저 다 $\sqrt{a}i$ 꼴로 바꾸자!</p>
+        <div class="step">
+          $\sqrt{-2} = \sqrt{2}i$, $\sqrt{-18} = 3\sqrt{2}i$<br><br>
+          $\sqrt{-2}\sqrt{-18} = \sqrt{2}i \times 3\sqrt{2}i = 3 \times 2 \times i^2 = -6$<br><br>
+          $\dfrac{\sqrt{-18}}{\sqrt{-2}} = \dfrac{3\sqrt{2}i}{\sqrt{2}i} = 3$<br><br>
+          $\dfrac{\sqrt{2}}{\sqrt{-18}} = \dfrac{\sqrt{2}}{3\sqrt{2}i} = \dfrac{1}{3i} = \dfrac{-i}{3}$<br><br>
+          합: $-6+3-\left(-\dfrac{i}{3}\right) = -3+\dfrac{1}{3}i$
+        </div>
+        <div class="answer">답: $-3+\dfrac{1}{3}i$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>확인 3: 다음을 계산하시오.</h4>
+    <p>(1) $i+i^2+i^3+\cdots+i^{11}$ &nbsp;&nbsp; (2) $\dfrac{1}{i}+\dfrac{1}{i^2}+\dfrac{1}{i^3}+\cdots+\dfrac{1}{i^{11}}$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, $i$의 거듭제곱은 4개씩 반복되고, 4개의 합은 0이야!</p>
+        <div class="step">
+          $i+i^2+i^3+i^4 = i+(-1)+(-i)+1 = 0$<br><br>
+          <b>(1)</b> $i^1$부터 $i^{11}$까지 = ($i^1$~$i^4$) + ($i^5$~$i^8$) + ($i^9$~$i^{11}$)<br>
+          $= 0 + 0 + (i+(-1)+(-i)) = -1$<br><br>
+          <b>(2)</b> $\dfrac{1}{i} = -i$, $\dfrac{1}{i^2} = -1$, $\dfrac{1}{i^3} = i$, $\dfrac{1}{i^4} = 1$이므로 역시 4개씩 합이 0<br>
+          $= 0 + 0 + (-i+(-1)+i) = -1$
+        </div>
+        <div class="answer">답: (1) $-1$ &nbsp; (2) $-1$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>확인 4: 교류 회로에서 전압 $V$, 전류 $I$, 임피던스 $Z$ 사이의 관계: $V = I \times Z$</h4>
+    <p>전압이 200이고 전류가 $6+8i$인 교류 회로에서 임피던스 $Z$를 구하시오.</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, $Z = \dfrac{V}{I}$를 계산하면 돼!</p>
+        <div class="step">
+          $Z = \dfrac{200}{6+8i} = \dfrac{200(6-8i)}{(6+8i)(6-8i)} = \dfrac{200(6-8i)}{36+64} = \dfrac{200(6-8i)}{100}$<br>
+          $= 2(6-8i) = 12-16i$
+        </div>
+        <div class="answer">답: $Z = 12-16i$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>확인 5: 등식 $(1+i)x^2+(m^2+2i)x = 3i$를 만족시키는 실수 $x$가 존재할 때, 양수 $m$의 값을 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, $x$가 실수니까 실수부분과 허수부분을 분리하자!</p>
+        <div class="step">
+          $(1+i)x^2+(m^2+2i)x = 3i$<br>
+          $(x^2+m^2x)+(x^2+2x)i = 0+3i$<br><br>
+          실수부분: $x^2+m^2x = 0$ → $x(x+m^2) = 0$ → $x=0$ 또는 $x=-m^2$<br>
+          허수부분: $x^2+2x = 3$ → $x^2+2x-3 = 0$ → $(x+3)(x-1) = 0$<br>
+          → $x=-3$ 또는 $x=1$<br><br>
+          실수부분에서 $x=-m^2$이 허수부분의 해와 같아야 하므로<br>
+          $-m^2 = -3$이면 $m^2 = 3$, $m = \sqrt{3}$ (양수)<br>
+          $-m^2 = 1$이면 $m^2 = -1$ (불가능)
+        </div>
+        <div class="answer">답: $m = \sqrt{3}$</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- ===================== 2단원 ===================== -->
+<div class="chapter ch2" id="s2">2단원: 이차방정식의 판별식</div>
+
+<div class="concept" id="s2-1">
+  <h2>2-1. 이차방정식의 실근과 허근</h2>
+
+  <div class="analogy">
+    <br>
+    지원아, 이차방정식의 근(답)을 구할 때 근의 공식을 쓰잖아?<br>
+    그런데 루트 안에 음수가 들어가면 어떡해? 예전에는 "해 없음"이었는데,<br>
+    이제 $i$를 배웠으니까 <b>허수인 근(허근)</b>도 구할 수 있어!<br>
+    실수인 근은 <b>실근</b>, 허수인 근은 <b>허근</b>이라고 불러.
+  </div>
+
+  <div class="formula-box">
+    <h4>지원아, 이것만 기억해!</h4>
+    <p>이차방정식 $ax^2+bx+c=0$의 근:</p>
+    <p>$x = \dfrac{-b \pm \sqrt{b^2-4ac}}{2a}$</p>
+    <p>$b^2-4ac \geq 0$ → 근은 <b>실근</b></p>
+    <p>$b^2-4ac < 0$ → 근은 <b>허근</b></p>
+  </div>
+
+  <div class="example">
+    <h4>예제 1: 다음 이차방정식을 풀고, 그 근이 실근인지 허근인지 말하시오.</h4>
+    <p>(1) $x^2-4x+2=0$ &nbsp;&nbsp; (2) $2x^2+3x+2=0$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 근의 공식에 대입해서 풀어보자!</p>
+        <div class="step">
+          <b>(1)</b> $a=1$, $b=-4$, $c=2$<br>
+          $x = \dfrac{-(-4) \pm \sqrt{(-4)^2-4 \times 1 \times 2}}{2 \times 1} = \dfrac{4 \pm \sqrt{8}}{2} = 2 \pm \sqrt{2}$<br>
+          루트 안이 양수 → <b>실근</b>
+        </div>
+        <div class="step">
+          <b>(2)</b> $a=2$, $b=3$, $c=2$<br>
+          $x = \dfrac{-3 \pm \sqrt{9-16}}{4} = \dfrac{-3 \pm \sqrt{-7}}{4} = \dfrac{-3 \pm \sqrt{7}i}{4}$<br>
+          루트 안이 음수 → <b>허근</b>
+        </div>
+        <div class="answer">답: (1) $x=2\pm\sqrt{2}$, 실근 &nbsp; (2) $x=\dfrac{-3\pm\sqrt{7}i}{4}$, 허근</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="tip">
+    <br>
+    이차방정식이 서로 다른 두 허근을 가지면, 두 근은 항상 <b>서로 켤레복소수</b>야!<br>
+    위 (2)번에서 $\dfrac{-3+\sqrt{7}i}{4}$와 $\dfrac{-3-\sqrt{7}i}{4}$는 켤레복소수 관계!
+  </div>
+
+  <div class="example">
+    <h4>문제 1: 다음 이차방정식을 풀고, 그 근이 실근인지 허근인지 말하시오.</h4>
+    <p>(1) $x^2-2x-2=0$ &nbsp;&nbsp; (2) $2x^2-x+1=0$</p>
+    <p>(3) $x^2+x-3=0$ &nbsp;&nbsp; (4) $2x^2+4x+3=0$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <div class="step">
+          <b>(1)</b> $x = \dfrac{2\pm\sqrt{4+8}}{2} = \dfrac{2\pm\sqrt{12}}{2} = 1\pm\sqrt{3}$ → <b>실근</b><br><br>
+          <b>(2)</b> $x = \dfrac{1\pm\sqrt{1-8}}{4} = \dfrac{1\pm\sqrt{-7}}{4} = \dfrac{1\pm\sqrt{7}i}{4}$ → <b>허근</b><br><br>
+          <b>(3)</b> $x = \dfrac{-1\pm\sqrt{1+12}}{2} = \dfrac{-1\pm\sqrt{13}}{2}$ → <b>실근</b><br><br>
+          <b>(4)</b> $x = \dfrac{-4\pm\sqrt{16-24}}{4} = \dfrac{-4\pm\sqrt{-8}}{4} = \dfrac{-4\pm2\sqrt{2}i}{4} = \dfrac{-2\pm\sqrt{2}i}{2}$ → <b>허근</b>
+        </div>
+        <div class="answer">답: (1) $1\pm\sqrt{3}$, 실근 (2) $\dfrac{1\pm\sqrt{7}i}{4}$, 허근 (3) $\dfrac{-1\pm\sqrt{13}}{2}$, 실근 (4) $\dfrac{-2\pm\sqrt{2}i}{2}$, 허근</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<div class="concept" id="s2-2">
+  <h2>2-2. 판별식</h2>
+
+  <div class="analogy">
+    <br>
+    지원아, 매번 근의 공식을 다 계산하지 않고도 "이 방정식의 근이 실수야? 허수야?"를 알아내는 방법이 있어!<br>
+    바로 루트 안의 식 $b^2-4ac$만 보면 돼! 이걸 <b>판별식</b>이라 부르고 $D$로 써.<br>
+    마치 날씨 앱에서 비 올 확률만 보고 우산을 가져갈지 결정하는 것처럼!
+  </div>
+
+  <div class="formula-box">
+    <h4>지원아, 이것만 기억해! - 이차방정식의 근의 판별</h4>
+    <p>이차방정식 $ax^2+bx+c=0$에서 $D = b^2-4ac$라 할 때</p>
+    <p>$D > 0$ → <b>서로 다른 두 실근</b></p>
+    <p>$D = 0$ → <b>중근(실근)</b></p>
+    <p>$D < 0$ → <b>서로 다른 두 허근</b></p>
+  </div>
+
+  <div class="tip">
+    <br>
+    $b$가 짝수일 때 $ax^2+2b'x+c=0$ 꼴이면 $\dfrac{D}{4} = b'^2-ac$를 사용하면 계산이 더 간단해!<br>
+    판별 결과는 동일하니까 편한 걸로 쓰면 돼.
+  </div>
+
+  <div class="example">
+    <h4>문제 2: 다음 이차방정식의 근을 판별하시오.</h4>
+    <p>(1) $x^2-5x-2=0$ &nbsp;&nbsp; (2) $x^2+4x+4=0$</p>
+    <p>(3) $2x^2-x+3=0$ &nbsp;&nbsp; (4) $-3x^2+2x+2=0$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, $D=b^2-4ac$를 계산해서 부호만 확인하면 돼!</p>
+        <div class="step">
+          <b>(1)</b> $D = 25-4(1)(-2) = 25+8 = 33 > 0$ → <b>서로 다른 두 실근</b><br><br>
+          <b>(2)</b> $D = 16-4(1)(4) = 16-16 = 0$ → <b>중근</b><br><br>
+          <b>(3)</b> $D = 1-4(2)(3) = 1-24 = -23 < 0$ → <b>서로 다른 두 허근</b><br><br>
+          <b>(4)</b> $D = 4-4(-3)(2) = 4+24 = 28 > 0$ → <b>서로 다른 두 실근</b>
+        </div>
+        <div class="answer">답: (1) 서로 다른 두 실근 (2) 중근 (3) 서로 다른 두 허근 (4) 서로 다른 두 실근</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>예제 2: 이차방정식 $x^2-6x+7-k=0$이 서로 다른 두 실근을 가질 때, 실수 $k$의 값의 범위를 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, "서로 다른 두 실근" → $D > 0$이야!</p>
+        <div class="step">
+          $\dfrac{D}{4} = (-3)^2-(7-k) = 9-7+k = k+2$<br><br>
+          서로 다른 두 실근을 가지려면 $\dfrac{D}{4} > 0$이어야 하므로<br>
+          $k+2 > 0$, 즉 $k > -2$
+        </div>
+        <div class="answer">답: $k > -2$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 3: 이차방정식 $x^2+3x+k+3=0$이 다음과 같은 근을 가질 때, 실수 $k$의 값 또는 그 범위를 구하시오.</h4>
+    <p>(1) 서로 다른 두 실근 &nbsp;&nbsp; (2) 중근 &nbsp;&nbsp; (3) 서로 다른 두 허근</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, $D$의 부호에 따라 나누면 돼!</p>
+        <div class="step">
+          $D = 9-4(k+3) = 9-4k-12 = -3-4k$<br><br>
+          <b>(1) 서로 다른 두 실근:</b> $D > 0$<br>
+          $-3-4k > 0$ → $-4k > 3$ → $k < -\dfrac{3}{4}$<br><br>
+          <b>(2) 중근:</b> $D = 0$<br>
+          $-3-4k = 0$ → $k = -\dfrac{3}{4}$<br><br>
+          <b>(3) 서로 다른 두 허근:</b> $D < 0$<br>
+          $-3-4k < 0$ → $k > -\dfrac{3}{4}$
+        </div>
+        <div class="answer">답: (1) $k < -\dfrac{3}{4}$ &nbsp; (2) $k = -\dfrac{3}{4}$ &nbsp; (3) $k > -\dfrac{3}{4}$</div>
+      </div>
+    </details>
+  </div>
+
+  <h3>스스로 확인하기</h3>
+
+  <div class="example">
+    <h4>확인 1: 다음 이차방정식과 근을 판별하여 알맞은 것끼리 연결하시오.</h4>
+    <p>$x^2-6x+9=0$ &nbsp; / &nbsp; $2x^2-3x-4=0$ &nbsp; / &nbsp; $x^2+4x+7=0$</p>
+    <p>→ 서로 다른 두 실근, 중근, 서로 다른 두 허근</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <div class="step">
+          $x^2-6x+9=0$: $D = 36-36 = 0$ → <b>중근</b><br>
+          $2x^2-3x-4=0$: $D = 9+32 = 41 > 0$ → <b>서로 다른 두 실근</b><br>
+          $x^2+4x+7=0$: $D = 16-28 = -12 < 0$ → <b>서로 다른 두 허근</b>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>확인 2: 이차방정식 $x^2+kx+1-3k=0$이 실근을 가질 때, 실수 $k$의 값의 범위를 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, "실근을 가질 때"는 $D \geq 0$이야! (서로 다른 두 실근 + 중근 모두 포함)</p>
+        <div class="step">
+          $D = k^2-4(1-3k) = k^2+12k-4 \geq 0$<br>
+          $(k+6)^2-40 \geq 0$<br>
+          $k \leq -6-2\sqrt{10}$ 또는 $k \geq -6+2\sqrt{10}$
+        </div>
+        <div class="answer">답: $k \leq -6-2\sqrt{10}$ 또는 $k \geq -6+2\sqrt{10}$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>확인 3: 이차방정식 $x^2-2kx+k^2-k+3=0$이 서로 다른 두 실근을 갖도록 하는 정수 $k$의 최솟값을 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <div class="step">
+          $\dfrac{D}{4} = k^2-(k^2-k+3) = k-3$<br>
+          서로 다른 두 실근: $\dfrac{D}{4} > 0$ → $k > 3$<br>
+          정수 $k$의 최솟값: $k = 4$
+        </div>
+        <div class="answer">답: $k = 4$</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- ===================== 3단원 ===================== -->
+<div class="chapter ch3" id="s3">3단원: 이차방정식의 근과 계수의 관계</div>
+
+<div class="concept" id="s3-1">
+  <h2>3-1. 근과 계수의 관계</h2>
+
+  <div class="analogy">
+    <br>
+    지원아, 신기한 거 알려줄까?<br>
+    이차방정식의 두 근을 직접 구하지 않아도, <b>두 근의 합과 곱</b>을 바로 알 수 있어!<br>
+    마치 선물 상자를 열어보지 않고도 무게로 안에 뭐가 있는지 추측하는 것처럼,<br>
+    방정식의 계수(숫자들)만 보면 근의 합과 곱을 알 수 있거든!
+  </div>
+
+  <div class="formula-box">
+    <h4>지원아, 이것만 기억해! - 근과 계수의 관계</h4>
+    <p>이차방정식 $ax^2+bx+c=0$의 두 근을 $\alpha$, $\beta$라 하면</p>
+    <p style="font-size:1.2em;">$\alpha+\beta = -\dfrac{b}{a}$ &nbsp;&nbsp;&nbsp; $\alpha\beta = \dfrac{c}{a}$</p>
+    <p>두 근의 합 = $-\dfrac{x의\;계수}{x^2의\;계수}$ &nbsp; 두 근의 곱 = $\dfrac{상수항}{x^2의\;계수}$</p>
+  </div>
+
+  <div class="tip">
+    <br>
+    합에서 마이너스 부호 빼먹지 마! $\alpha+\beta = \color{red}{-}\dfrac{b}{a}$<br>
+    예: $3x^2+2x+1=0$에서 두 근의 합 = $-\dfrac{2}{3}$, 두 근의 곱 = $\dfrac{1}{3}$
+  </div>
+
+  <div class="example">
+    <h4>문제 1: 다음 이차방정식의 두 근의 합과 곱을 구하시오.</h4>
+    <p>(1) $x^2-4x+5=0$ &nbsp;&nbsp; (2) $2x^2+3x-4=0$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <div class="step">
+          <b>(1)</b> $\alpha+\beta = -\dfrac{-4}{1} = 4$, $\alpha\beta = \dfrac{5}{1} = 5$<br><br>
+          <b>(2)</b> $\alpha+\beta = -\dfrac{3}{2}$, $\alpha\beta = \dfrac{-4}{2} = -2$
+        </div>
+        <div class="answer">답: (1) 합: 4, 곱: 5 &nbsp; (2) 합: $-\dfrac{3}{2}$, 곱: $-2$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>예제 1: 이차방정식 $x^2-5x-3=0$의 두 근을 $\alpha$, $\beta$라 할 때, $\alpha^2+\beta^2$의 값을 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, $\alpha^2+\beta^2$을 $(\alpha+\beta)$와 $\alpha\beta$로 바꿔 쓸 수 있어!</p>
+        <div class="step">
+          근과 계수의 관계에서 $\alpha+\beta = 5$, $\alpha\beta = -3$<br><br>
+          $\alpha^2+\beta^2 = (\alpha+\beta)^2 - 2\alpha\beta$<br>
+          $= 5^2 - 2 \times (-3)$<br>
+          $= 25 + 6 = 31$
+        </div>
+        <div class="answer">답: $31$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 2: 이차방정식 $2x^2-4x+1=0$의 두 근을 $\alpha$, $\beta$라 할 때, 다음 식의 값을 구하시오.</h4>
+    <p>(1) $\alpha^2+\beta^2$ &nbsp;&nbsp; (2) $(\alpha-\beta)^2$ &nbsp;&nbsp; (3) $\dfrac{\beta}{\alpha}+\dfrac{\alpha}{\beta}$ &nbsp;&nbsp; (4) $(\alpha+1)(\beta+1)$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 먼저 합과 곱부터 구하자! $\alpha+\beta = 2$, $\alpha\beta = \dfrac{1}{2}$</p>
+        <div class="step">
+          <b>(1)</b> $\alpha^2+\beta^2 = (\alpha+\beta)^2-2\alpha\beta = 4-1 = 3$<br><br>
+          <b>(2)</b> $(\alpha-\beta)^2 = (\alpha+\beta)^2-4\alpha\beta = 4-2 = 2$<br><br>
+          <b>(3)</b> $\dfrac{\beta}{\alpha}+\dfrac{\alpha}{\beta} = \dfrac{\alpha^2+\beta^2}{\alpha\beta} = \dfrac{3}{1/2} = 6$<br><br>
+          <b>(4)</b> $(\alpha+1)(\beta+1) = \alpha\beta+\alpha+\beta+1 = \dfrac{1}{2}+2+1 = \dfrac{7}{2}$
+        </div>
+        <div class="answer">답: (1) $3$ (2) $2$ (3) $6$ (4) $\dfrac{7}{2}$</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<div class="concept" id="s3-2">
+  <h2>3-2. 두 수를 근으로 하는 이차방정식</h2>
+
+  <div class="analogy">
+    <br>
+    지원아, 지금까지는 방정식 → 근을 구했는데, 이번에는 반대야!<br>
+    근 → 방정식을 만드는 거야. 레시피를 보고 요리하는 것(근 구하기)에서,<br>
+    완성된 요리를 보고 레시피를 만드는 것(방정식 만들기)으로 바뀐 거지!
+  </div>
+
+  <div class="formula-box">
+    <h4>지원아, 이것만 기억해!</h4>
+    <p>두 수 $\alpha$, $\beta$를 근으로 하고 $x^2$의 계수가 1인 이차방정식:</p>
+    <p style="font-size:1.2em;">$x^2 - (\alpha+\beta)x + \alpha\beta = 0$</p>
+    <p>(두 근의 합)을 빼고, (두 근의 곱)을 더한다!</p>
+  </div>
+
+  <div class="example">
+    <h4>문제 3: 다음 두 수를 근으로 하고 $x^2$의 계수가 1인 이차방정식을 구하시오.</h4>
+    <p>(1) $1+\sqrt{2}$, $1-\sqrt{2}$ &nbsp;&nbsp; (2) $\dfrac{1+\sqrt{3}i}{2}$, $\dfrac{1-\sqrt{3}i}{2}$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 합과 곱을 구해서 공식에 대입하자!</p>
+        <div class="step">
+          <b>(1)</b> 합: $(1+\sqrt{2})+(1-\sqrt{2}) = 2$<br>
+          곱: $(1+\sqrt{2})(1-\sqrt{2}) = 1-2 = -1$<br>
+          $x^2 - 2x + (-1) = 0$ → $x^2-2x-1=0$<br><br>
+          <b>(2)</b> 합: $\dfrac{1+\sqrt{3}i}{2}+\dfrac{1-\sqrt{3}i}{2} = 1$<br>
+          곱: $\dfrac{(1+\sqrt{3}i)(1-\sqrt{3}i)}{4} = \dfrac{1+3}{4} = 1$<br>
+          $x^2 - x + 1 = 0$
+        </div>
+        <div class="answer">답: (1) $x^2-2x-1=0$ &nbsp; (2) $x^2-x+1=0$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 4: 이차방정식 $x^2-5x+3=0$의 두 근을 $\alpha$, $\beta$라 할 때, 다음 두 수를 근으로 하고 $x^2$의 계수가 1인 이차방정식을 구하시오.</h4>
+    <p>(1) $\alpha+\beta$, $\alpha\beta$ &nbsp;&nbsp; (2) $\dfrac{1}{\alpha}$, $\dfrac{1}{\beta}$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 원래 방정식에서 $\alpha+\beta=5$, $\alpha\beta=3$이야!</p>
+        <div class="step">
+          <b>(1)</b> 두 근: $5$, $3$<br>
+          합: $5+3=8$, 곱: $5 \times 3 = 15$<br>
+          $x^2-8x+15=0$<br><br>
+          <b>(2)</b> 두 근: $\dfrac{1}{\alpha}$, $\dfrac{1}{\beta}$<br>
+          합: $\dfrac{1}{\alpha}+\dfrac{1}{\beta} = \dfrac{\alpha+\beta}{\alpha\beta} = \dfrac{5}{3}$<br>
+          곱: $\dfrac{1}{\alpha\beta} = \dfrac{1}{3}$<br>
+          $x^2-\dfrac{5}{3}x+\dfrac{1}{3}=0$ → $3x^2-5x+1=0$
+        </div>
+        <div class="answer">답: (1) $x^2-8x+15=0$ &nbsp; (2) $3x^2-5x+1=0$</div>
+      </div>
+    </details>
+  </div>
+
+  <h3>스스로 확인하기</h3>
+
+  <div class="example">
+    <h4>확인 1: 이차방정식 $2x^2-3x+6=0$의 두 근을 $\alpha$, $\beta$라 할 때, 다음 식의 값을 구하시오.</h4>
+    <p>(1) $(\alpha-1)(\beta-1)$ &nbsp;&nbsp; (2) $\alpha^2+\alpha\beta+\beta^2$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>$\alpha+\beta = \dfrac{3}{2}$, $\alpha\beta = 3$</p>
+        <div class="step">
+          <b>(1)</b> $(\alpha-1)(\beta-1) = \alpha\beta-(\alpha+\beta)+1 = 3-\dfrac{3}{2}+1 = \dfrac{5}{2}$<br><br>
+          <b>(2)</b> $\alpha^2+\alpha\beta+\beta^2 = (\alpha+\beta)^2-\alpha\beta = \dfrac{9}{4}-3 = -\dfrac{3}{4}$
+        </div>
+        <div class="answer">답: (1) $\dfrac{5}{2}$ &nbsp; (2) $-\dfrac{3}{4}$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>확인 2: $x^2+ax-2=0$의 두 근 $\alpha$, $\beta$가 $\alpha^2+\beta^2=13$을 만족시킬 때, 양수 $a$의 값을 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <div class="step">
+          $\alpha+\beta = -a$, $\alpha\beta = -2$<br>
+          $\alpha^2+\beta^2 = (\alpha+\beta)^2-2\alpha\beta = a^2-2(-2) = a^2+4 = 13$<br>
+          $a^2 = 9$, $a = 3$ (양수)
+        </div>
+        <div class="answer">답: $a = 3$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>확인 4: 다음을 만족시키는 두 수 $\alpha$, $\beta$를 구하시오. (단, $\alpha < \beta$)</h4>
+    <p>(1) $\alpha+\beta=4$, $\alpha\beta=2$ &nbsp;&nbsp; (2) $\alpha+\beta=3$, $\alpha\beta=-5$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, $\alpha$, $\beta$를 근으로 하는 이차방정식을 만들어서 풀면 돼!</p>
+        <div class="step">
+          <b>(1)</b> $t^2-4t+2=0$ → $t = \dfrac{4\pm\sqrt{8}}{2} = 2\pm\sqrt{2}$<br>
+          $\alpha = 2-\sqrt{2}$, $\beta = 2+\sqrt{2}$<br><br>
+          <b>(2)</b> $t^2-3t-5=0$ → $t = \dfrac{3\pm\sqrt{29}}{2}$<br>
+          $\alpha = \dfrac{3-\sqrt{29}}{2}$, $\beta = \dfrac{3+\sqrt{29}}{2}$
+        </div>
+        <div class="answer">답: (1) $\alpha=2-\sqrt{2}$, $\beta=2+\sqrt{2}$ &nbsp; (2) $\alpha=\dfrac{3-\sqrt{29}}{2}$, $\beta=\dfrac{3+\sqrt{29}}{2}$</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- ===================== 4단원 ===================== -->
+<div class="chapter ch4" id="s4">4단원: 이차방정식과 이차함수의 관계</div>
+
+<div class="concept" id="s4-1">
+  <h2>4-1. 이차함수의 그래프와 x축</h2>
+
+  <div class="analogy">
+    <br>
+    지원아, 공을 위로 던지면 포물선을 그리면서 올라갔다 내려오잖아?<br>
+    이 포물선이 바로 이차함수의 그래프야! 그리고 이 포물선이 <b>땅(x축)과 만나는 점</b>이<br>
+    바로 이차방정식의 근(해)이야! 포물선과 땅의 관계 = 이차함수와 이차방정식의 관계!
+  </div>
+
+  <div class="formula-box">
+    <h4>지원아, 이것만 기억해!</h4>
+    <p>이차함수 $y=ax^2+bx+c$의 그래프와 $x$축의 교점의 $x$좌표</p>
+    <p>= 이차방정식 $ax^2+bx+c=0$의 <b>실근</b></p>
+    <p>판별식 $D=b^2-4ac$에 따라:</p>
+    <p>$D > 0$: 서로 다른 <b>두 점</b>에서 만남</p>
+    <p>$D = 0$: <b>한 점</b>에서 만남 (접함)</p>
+    <p>$D < 0$: <b>만나지 않음</b></p>
+  </div>
+
+  <div class="example">
+    <h4>문제 1: 다음 이차함수의 그래프와 $x$축의 위치 관계를 말하시오.</h4>
+    <p>(1) $y=x^2+3x-4$ &nbsp;&nbsp; (2) $y=-2x^2+x-5$</p>
+    <p>(3) $y=9x^2-6x+1$ &nbsp;&nbsp; (4) $y=2x^2+5x+3$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <div class="step">
+          <b>(1)</b> $D = 9+16 = 25 > 0$ → <b>두 점에서 만난다</b><br><br>
+          <b>(2)</b> $D = 1-40 = -39 < 0$ → <b>만나지 않는다</b><br><br>
+          <b>(3)</b> $D = 36-36 = 0$ → <b>한 점에서 만난다(접한다)</b><br><br>
+          <b>(4)</b> $D = 25-24 = 1 > 0$ → <b>두 점에서 만난다</b>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 2: 이차함수 $y=x^2-3x+k$의 그래프와 $x$축이 서로 다른 두 점에서 만날 때, 실수 $k$의 값의 범위를 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <div class="step">
+          $D = 9-4k > 0$<br>
+          $k < \dfrac{9}{4}$
+        </div>
+        <div class="answer">답: $k < \dfrac{9}{4}$</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<div class="concept" id="s4-2">
+  <h2>4-2. 이차함수의 그래프와 직선의 위치 관계</h2>
+
+  <div class="analogy">
+    <br>
+    지원아, 포물선과 직선이 만나는 점을 구하는 건, 두 식을 연립방정식으로 푸는 것과 같아!<br>
+    $y=ax^2+bx+c$와 $y=mx+n$을 같다고 놓으면<br>
+    $ax^2+(b-m)x+(c-n)=0$이라는 이차방정식이 나오고,<br>
+    이 방정식의 판별식으로 만나는지 안 만나는지 알 수 있어!
+  </div>
+
+  <div class="formula-box">
+    <h4>이차함수의 그래프와 직선의 위치 관계</h4>
+    <p>$y=ax^2+bx+c$와 $y=mx+n$의 교점</p>
+    <p>→ $ax^2+(b-m)x+(c-n)=0$의 판별식 $D$로 판별</p>
+    <p>$D > 0$: 서로 다른 <b>두 점</b>에서 만남</p>
+    <p>$D = 0$: <b>한 점</b>에서 만남 (접함)</p>
+    <p>$D < 0$: <b>만나지 않음</b></p>
+  </div>
+
+  <div class="example">
+    <h4>예제 1: 이차함수 $y=x^2+4x+3$의 그래프와 직선 $y=3x+k$가 한 점에서 만날 때, 실수 $k$의 값을 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 두 식을 같다고 놓고 판별식을 쓰자!</p>
+        <div class="step">
+          $x^2+4x+3 = 3x+k$<br>
+          $x^2+x+3-k = 0$<br><br>
+          한 점에서 만남 → $D = 0$<br>
+          $D = 1-4(3-k) = 1-12+4k = 4k-11 = 0$<br>
+          $k = \dfrac{11}{4}$
+        </div>
+        <div class="answer">답: $k = \dfrac{11}{4}$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 3: 이차함수 $y=x^2-2x+3$의 그래프와 다음 직선의 위치 관계를 말하시오.</h4>
+    <p>(1) $y=-x+1$ &nbsp;&nbsp; (2) $y=x+6$ &nbsp;&nbsp; (3) $y=2x-1$</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <div class="step">
+          <b>(1)</b> $x^2-2x+3 = -x+1$ → $x^2-x+2=0$<br>
+          $D = 1-8 = -7 < 0$ → <b>만나지 않는다</b><br><br>
+          <b>(2)</b> $x^2-2x+3 = x+6$ → $x^2-3x-3=0$<br>
+          $D = 9+12 = 21 > 0$ → <b>두 점에서 만난다</b><br><br>
+          <b>(3)</b> $x^2-2x+3 = 2x-1$ → $x^2-4x+4=0$<br>
+          $D = 16-16 = 0$ → <b>한 점에서 만난다(접한다)</b>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 4: 이차함수 $y=x^2-2x+4$의 그래프와 직선 $y=4x+k$가 서로 다른 두 점에서 만날 때, 실수 $k$의 값의 범위를 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <div class="step">
+          $x^2-2x+4 = 4x+k$ → $x^2-6x+4-k=0$<br>
+          $D = 36-4(4-k) = 36-16+4k = 20+4k > 0$<br>
+          $k > -5$
+        </div>
+        <div class="answer">답: $k > -5$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 5: 이차함수 $y=-2x^2+x+k$의 그래프와 직선 $y=-5x+3$이 접할 때, 실수 $k$의 값을 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <div class="step">
+          $-2x^2+x+k = -5x+3$ → $-2x^2+6x+k-3=0$<br>
+          $2x^2-6x-k+3=0$<br>
+          접함 → $D = 0$<br>
+          $D = 36-4(2)(-k+3) = 36+8k-24 = 12+8k = 0$<br>
+          $k = -\dfrac{3}{2}$
+        </div>
+        <div class="answer">답: $k = -\dfrac{3}{2}$</div>
+      </div>
+    </details>
+  </div>
+
+  <h3>스스로 확인하기</h3>
+
+  <div class="example">
+    <h4>확인 1: 이차함수 $y=x^2+4x+a-3$의 그래프가 $x$축과 접할 때, 실수 $a$의 값을 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <div class="step">
+          $D = 16-4(a-3) = 16-4a+12 = 28-4a = 0$<br>
+          $a = 7$
+        </div>
+        <div class="answer">답: $a = 7$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>확인 2: 이차함수 $y=2x^2+4x-4$의 그래프와 직선 $y=x+k$가 만나지 않도록 하는 실수 $k$의 값의 범위를 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <div class="step">
+          $2x^2+4x-4 = x+k$ → $2x^2+3x-4-k=0$<br>
+          만나지 않음 → $D < 0$<br>
+          $D = 9-4(2)(-4-k) = 9+32+8k = 41+8k < 0$<br>
+          $k < -\dfrac{41}{8}$
+        </div>
+        <div class="answer">답: $k < -\dfrac{41}{8}$</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- ===================== 5단원 ===================== -->
+<div class="chapter ch5" id="s5">5단원: 이차함수의 최대, 최소</div>
+
+<div class="concept" id="s5-1">
+  <h2>5-1. 제한된 범위에서 최댓값과 최솟값</h2>
+
+  <div class="analogy">
+    <br>
+    지원아, 놀이공원에서 롤러코스터를 타면 올라갔다가 내려오잖아?<br>
+    그런데 "출발점부터 꼭대기까지만 본다" vs "전체 트랙을 본다"에 따라 가장 높은 곳이 달라질 수 있어!<br>
+    이차함수도 마찬가지야. $x$의 범위가 제한되면, 최댓값/최솟값이 달라질 수 있어!<br>
+    핵심은 <b>꼭짓점이 범위 안에 있느냐 없느냐</b>야!
+  </div>
+
+  <div class="formula-box">
+    <h4>지원아, 이것만 기억해!</h4>
+    <p>$f(x) = a(x-p)^2+q$에서 $a \leq x \leq \beta$일 때</p>
+    <p><b>꼭짓점($x=p$)이 범위 안에 있으면:</b></p>
+    <p>$a > 0$: 최솟값 = $q$ (꼭짓점), 최댓값 = $f(\alpha)$, $f(\beta)$ 중 큰 값</p>
+    <p>$a < 0$: 최댓값 = $q$ (꼭짓점), 최솟값 = $f(\alpha)$, $f(\beta)$ 중 작은 값</p>
+    <p><b>꼭짓점이 범위 밖이면:</b></p>
+    <p>$f(\alpha)$, $f(\beta)$ 중 큰 값이 최댓값, 작은 값이 최솟값</p>
+  </div>
+
+  <div class="tip">
+    <br>
+    <b>3단계로 풀자!</b><br>
+    1단계: 꼭짓점 좌표 구하기 (완전제곱식으로 변환)<br>
+    2단계: 꼭짓점이 범위 안에 있는지 확인<br>
+    3단계: 양 끝점과 꼭짓점의 함숫값 비교!
+  </div>
+
+  <div class="example">
+    <h4>예제 1: $0 \leq x \leq 3$일 때, 이차함수 $y=x^2-4x+3$의 최댓값과 최솟값을 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 먼저 꼭짓점을 구하자!</p>
+        <div class="step">
+          $y = x^2-4x+3 = (x-2)^2-1$<br>
+          꼭짓점: $(2, -1)$ → $x=2$는 $0 \leq x \leq 3$ 범위 안에 있어!<br><br>
+          $x=0$일 때 $y=3$<br>
+          $x=2$일 때 $y=-1$ (꼭짓점)<br>
+          $x=3$일 때 $y=0$<br><br>
+          $a > 0$이므로 아래로 볼록 → 꼭짓점에서 최솟값
+        </div>
+        <div class="answer">답: 최댓값: $3$ (x=0), 최솟값: $-1$ (x=2)</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 1: 다음 주어진 $x$의 값의 범위에서 이차함수의 최댓값과 최솟값을 구하시오.</h4>
+    <p>(1) $y=x^2-4x$ ($1 \leq x \leq 3$) &nbsp;&nbsp; (2) $y=-3x^2+6x+2$ ($-3 \leq x \leq -1$)</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <div class="step">
+          <b>(1)</b> $y = (x-2)^2-4$, 꼭짓점 $(2, -4)$ → 범위 안!<br>
+          $f(1) = 1-4 = -3$, $f(2) = -4$, $f(3) = 9-12 = -3$<br>
+          최댓값: $-3$, 최솟값: $-4$<br><br>
+          <b>(2)</b> $y = -3(x-1)^2+5$, 꼭짓점 $(1, 5)$ → 범위 밖!<br>
+          $f(-3) = -3(9)+6(-3)+2 = -27-18+2 = -43$<br>
+          $f(-1) = -3(1)+6(-1)+2 = -3-6+2 = -7$<br>
+          최댓값: $-7$, 최솟값: $-43$
+        </div>
+        <div class="answer">답: (1) 최댓값: $-3$, 최솟값: $-4$ &nbsp; (2) 최댓값: $-7$, 최솟값: $-43$</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<div class="concept" id="s5-2">
+  <h2>5-2. 이차함수의 최대, 최소의 활용</h2>
+
+  <div class="analogy">
+    <br>
+    지원아, 이차함수의 최대/최소는 실생활에서 엄청 많이 쓰여!<br>
+    "울타리로 만들 수 있는 가장 넓은 공간은?" "공을 던졌을 때 가장 높이 올라가는 높이는?"<br>
+    이런 문제들이 다 이차함수의 최대/최소 문제야!<br>
+    핵심은 <b>변수를 정하고 → 이차식으로 만들고 → 꼭짓점을 찾는 것</b>!
+  </div>
+
+  <div class="example">
+    <h4>예제 2: 길이가 10m인 울타리로 벽면에 직사각형 모양의 공간을 만들 때, 바닥의 최대 넓이를 구하시오. (단, 울타리 두께 무시)</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <p>지원아, 먼저 변수를 정하자!</p>
+        <div class="step">
+          <b>변수 정하기:</b> 가로 = $x$m, 세로 = $y$m²<br><br>
+          <b>변수의 범위:</b> 가로의 길이가 $x$m이면 세로의 길이는 $(10-x)/2$가 아니라...<br>
+          벽면이 한쪽이므로 울타리: $x + 2y = 10$에서 $y = \dfrac{10-x}{2}$<br>
+          $x > 0$, $10-x > 0$이므로 $0 < x < 10$<br><br>
+          <b>관계식 세우기:</b> 넓이 $= x \cdot \dfrac{10-x}{2} = \dfrac{x(10-x)}{2}$<br>
+          $= \dfrac{-x^2+10x}{2} = -\dfrac{1}{2}(x-5)^2+\dfrac{25}{2}$<br><br>
+          <b>답 구하기:</b> $x=5$일 때 최댓값 $\dfrac{25}{2} = 12.5$m²
+        </div>
+        <div class="answer">답: 바닥의 최대 넓이는 $\dfrac{25}{2}$m² (= 12.5m²)</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 2: 10m 높이의 발판에서 다이빙하는 경기에서, 도약 후 $t$초 후 수면으로부터의 높이가 $h = -5t^2+4t+10$일 때, 선수가 가장 높이 올라갔을 때 수면으로부터의 높이를 구하시오. (단, $0 < t < 1.8$)</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <div class="step">
+          $h = -5t^2+4t+10 = -5\left(t-\dfrac{2}{5}\right)^2+10+\dfrac{4}{5}$<br>
+          $= -5\left(t-\dfrac{2}{5}\right)^2+\dfrac{54}{5}$<br><br>
+          $t = \dfrac{2}{5} = 0.4$초일 때 최댓값 $\dfrac{54}{5} = 10.8$m
+        </div>
+        <div class="answer">답: $\dfrac{54}{5}$m (= 10.8m)</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>문제 3: 폭이 20cm인 양철판의 양 끝을 $x$cm씩 접어 단면이 직사각형인 물받이를 만들 때, 단면의 넓이 $S$가 최대일 때 $x$의 값을 구하시오.</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <div class="step">
+          밑면의 가로: $(20-2x)$cm, 높이: $x$cm<br>
+          $S = x(20-2x) = -2x^2+20x = -2(x-5)^2+50$<br>
+          $0 < x < 10$에서 $x = 5$일 때 최대
+        </div>
+        <div class="answer">답: $x = 5$cm (최대 넓이: 50cm²)</div>
+      </div>
+    </details>
+  </div>
+
+  <h3>스스로 확인하기</h3>
+
+  <div class="example">
+    <h4>확인 1: 다음 주어진 $x$의 값의 범위에서 이차함수의 최댓값과 최솟값을 구하시오.</h4>
+    <p>(1) $y=x^2-8x+3$ ($2 \leq x \leq 8$) &nbsp;&nbsp; (2) $y=-x^2+6x+3$ ($0 \leq x \leq 5$)</p>
+    <p>(3) $y=x^2+4x+7$ ($1 \leq x \leq 4$)</p>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <div class="step">
+          <b>(1)</b> $y = (x-4)^2-13$, 꼭짓점 $(4, -13)$ → 범위 안<br>
+          $f(2) = 4-16+3 = -9$, $f(4) = -13$, $f(8) = 64-64+3 = 3$<br>
+          최댓값: $3$, 최솟값: $-13$<br><br>
+          <b>(2)</b> $y = -(x-3)^2+12$, 꼭짓점 $(3, 12)$ → 범위 안<br>
+          $f(0) = 3$, $f(3) = 12$, $f(5) = -25+30+3 = 8$<br>
+          최댓값: $12$, 최솟값: $3$<br><br>
+          <b>(3)</b> $y = (x+2)^2+3$, 꼭짓점 $(-2, 3)$ → 범위 밖<br>
+          $f(1) = 1+4+7 = 12$, $f(4) = 16+16+7 = 39$<br>
+          최댓값: $39$, 최솟값: $12$
+        </div>
+        <div class="answer">답: (1) 최댓값 3, 최솟값 $-13$ (2) 최댓값 12, 최솟값 3 (3) 최댓값 39, 최솟값 12</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>확인 2: $-1 \leq x \leq 4$에서 이차함수 $y=2x^2-8x+k$의 최댓값이 11일 때, 최솟값을 구하시오. (단, $k$는 실수)</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <div class="step">
+          $y = 2(x-2)^2-8+k$, 꼭짓점 $(2, k-8)$ → 범위 안<br>
+          $f(-1) = 2(9)-8+k = 10+k$<br>
+          $f(4) = 2(4)-8+k = k$<br>
+          $f(2) = k-8$ (최솟값)<br><br>
+          최댓값은 $f(-1) = 10+k = 11$ → $k = 1$<br>
+          최솟값 = $k-8 = 1-8 = -7$
+        </div>
+        <div class="answer">답: 최솟값 $= -7$</div>
+      </div>
+    </details>
+  </div>
+
+  <div class="example">
+    <h4>확인 3: 이차함수 $f(x)=x^2+ax+3$이 $f(-1)=f(3)$을 만족시킬 때, $0 \leq x \leq 4$에서 $f(x)$의 최댓값과 최솟값을 구하시오. (단, $a$는 실수)</h4>
+    <details class="solution">
+      <summary></summary>
+      <div class="sol-content">
+        <div class="step">
+          $f(-1) = 1-a+3 = 4-a$<br>
+          $f(3) = 9+3a+3 = 12+3a$<br>
+          $4-a = 12+3a$ → $-4a = 8$ → $a = -2$<br><br>
+          $f(x) = x^2-2x+3 = (x-1)^2+2$<br>
+          $f(0) = 3$, $f(1) = 2$ (최솟값), $f(4) = 11$ (최댓값)
+        </div>
+        <div class="answer">답: 최댓값 $11$, 최솟값 $2$</div>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- ===================== 핵심 공식 총정리 ===================== -->
+<div class="final-review" id="review">
+  <h2>핵심 공식 총정리</h2>
+
+  <div class="formula-box">
+    <h4>1. 복소수</h4>
+    <p>$i^2 = -1$, &nbsp; $a+bi$ ($a$: 실수부분, $b$: 허수부분)</p>
+    <p>켤레복소수: $\overline{a+bi} = a-bi$</p>
+    <p>$(a+bi)(a-bi) = a^2+b^2$</p>
+    <p>$i$의 거듭제곱: $i, -1, -i, 1$ 반복 (4개 주기)</p>
+    <p>$a > 0$일 때 $\sqrt{-a} = \sqrt{a}i$</p>
+  </div>
+
+  <div class="formula-box">
+    <h4>2. 판별식</h4>
+    <p>$ax^2+bx+c=0$에서 $D = b^2-4ac$</p>
+    <p>$D > 0$: 서로 다른 두 실근 &nbsp;|&nbsp; $D = 0$: 중근 &nbsp;|&nbsp; $D < 0$: 서로 다른 두 허근</p>
+    <p>$ax^2+2b'x+c=0$일 때 $\dfrac{D}{4} = b'^2-ac$</p>
+  </div>
+
+  <div class="formula-box">
+    <h4>3. 근과 계수의 관계</h4>
+    <p>$ax^2+bx+c=0$의 두 근 $\alpha$, $\beta$:</p>
+    <p>$\alpha+\beta = -\dfrac{b}{a}$, &nbsp;&nbsp; $\alpha\beta = \dfrac{c}{a}$</p>
+    <p>두 수를 근으로 하는 이차방정식: $x^2-(\alpha+\beta)x+\alpha\beta = 0$</p>
+  </div>
+
+  <div class="formula-box">
+    <h4>4. 이차함수와 이차방정식</h4>
+    <p>$y=ax^2+bx+c$의 그래프와 $x$축의 교점 = $ax^2+bx+c=0$의 실근</p>
+    <p>그래프와 직선 $y=mx+n$: $ax^2+(b-m)x+(c-n)=0$의 판별식으로 판별</p>
+  </div>
+
+  <div class="formula-box">
+    <h4>5. 이차함수의 최대, 최소</h4>
+    <p>$f(x)=a(x-p)^2+q$, 범위 $\alpha \leq x \leq \beta$</p>
+    <p>꼭짓점 포함 여부 확인 → 양 끝점 + 꼭짓점 함숫값 비교</p>
+    <p>$a > 0$: 꼭짓점에서 최솟값 &nbsp;|&nbsp; $a < 0$: 꼭짓점에서 최댓값</p>
+  </div>
+
+  <div class="formula-box">
+    <h4>자주 쓰이는 변환 공식</h4>
+    <p>$\alpha^2+\beta^2 = (\alpha+\beta)^2-2\alpha\beta$</p>
+    <p>$(\alpha-\beta)^2 = (\alpha+\beta)^2-4\alpha\beta$</p>
+    <p>$\dfrac{1}{\alpha}+\dfrac{1}{\beta} = \dfrac{\alpha+\beta}{\alpha\beta}$</p>
+  </div>
+</div>
+
+<div class="ending">
+  지원아, 여기까지 다 읽었으면 방정식과 부등식은 이제 정복한 거야! 화이팅!
+</div>
+
+</div>
+</body>
+</html>
