@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2024 1학기 중간고사 풀이 - 지원이의 수학 노트</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  background: #f0f4f8; color: #2d3748; line-height: 1.8;
+}
+.container { max-width: 900px; margin: 0 auto; padding: 20px; }
+header {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white; text-align: center; padding: 40px 20px; border-radius: 16px;
+  margin-bottom: 30px; box-shadow: 0 10px 30px rgba(245,87,108,0.3);
+}
+header h1 { font-size: 2.2em; margin-bottom: 10px; }
+header p { font-size: 1.1em; opacity: 0.9; }
+.home-link {
+  display: inline-block; margin-bottom: 20px; text-decoration: none;
+  color: #667eea; font-weight: 600; font-size: 1em;
+}
+.home-link:hover { text-decoration: underline; }
+
+/* 네비게이션 */
+.nav {
+  background: white; border-radius: 12px; padding: 20px; margin-bottom: 30px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+.nav h3 { margin-bottom: 12px; color: #4a5568; }
+.nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.nav a {
+  display: inline-block; padding: 8px 16px; background: #edf2f7;
+  border-radius: 8px; text-decoration: none; color: #4a5568;
+  font-size: 0.95em; font-weight: 500; transition: all 0.2s;
+}
+.nav a:hover, .nav a.active { background: #667eea; color: white; }
+
+/* 문제 카드 */
+.problem {
+  background: white; border-radius: 16px; padding: 32px;
+  margin-bottom: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+.problem-header {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+  padding-bottom: 16px; border-bottom: 2px solid #edf2f7;
+}
+.problem-num {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white; width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 1.2em; flex-shrink: 0;
+}
+.problem-title { font-size: 1.3em; font-weight: 700; color: #2d3748; }
+.problem-score {
+  margin-left: auto; background: #fef3c7; color: #92400e;
+  padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600;
+}
+
+/* 문제 내용 */
+.question-box {
+  background: #f7fafc; border-left: 4px solid #667eea;
+  padding: 20px; border-radius: 0 12px 12px 0; margin-bottom: 20px;
+  font-size: 1.05em;
+}
+.choices {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px; margin: 16px 0;
+}
+.choices .choice {
+  padding: 8px 14px; background: #edf2f7; border-radius: 8px; font-size: 0.95em;
+}
+.choices .choice.correct {
+  background: #c6f6d5; color: #22543d; font-weight: 600;
+  border: 2px solid #48bb78;
+}
+
+/* 개념 설명 */
+.concept {
+  background: linear-gradient(135deg, #ebf8ff, #e9d8fd);
+  border-radius: 12px; padding: 24px; margin: 20px 0;
+}
+.concept h4 {
+  color: #553c9a; font-size: 1.1em; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.concept h4::before { content: '💡'; }
+.concept ul { padding-left: 20px; }
+.concept li { margin-bottom: 6px; }
+.concept .formula {
+  background: white; padding: 12px 16px; border-radius: 8px;
+  margin: 10px 0; text-align: center; font-size: 1.1em;
+  border: 1px solid #d6bcfa;
+}
+
+/* 풀이 */
+.solution {
+  background: #fffff0; border: 1px solid #fefcbf;
+  border-radius: 12px; padding: 24px; margin-top: 20px;
+}
+.solution h4 {
+  color: #975a16; font-size: 1.1em; margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+.solution h4::before { content: '✏️'; }
+.step {
+  margin-bottom: 16px; padding: 14px 18px;
+  background: white; border-radius: 10px;
+  border-left: 3px solid #ecc94b;
+}
+.step-label {
+  font-weight: 700; color: #975a16; font-size: 0.9em;
+  margin-bottom: 6px;
+}
+.answer-box {
+  background: linear-gradient(135deg, #c6f6d5, #9ae6b4);
+  border-radius: 10px; padding: 16px 20px; margin-top: 16px;
+  text-align: center; font-size: 1.15em; font-weight: 700;
+  color: #22543d;
+}
+
+/* 팁 박스 */
+.tip {
+  background: #fff5f5; border-left: 4px solid #fc8181;
+  padding: 14px 18px; border-radius: 0 10px 10px 0;
+  margin-top: 16px; font-size: 0.95em;
+}
+.tip strong { color: #c53030; }
+
+/* 조립제법 표 */
+.synth-table {
+  border-collapse: collapse; margin: 12px auto;
+  font-size: 1.1em;
+}
+.synth-table td {
+  padding: 8px 16px; text-align: center; min-width: 50px;
+}
+.synth-table .divider td {
+  border-bottom: 2px solid #2d3748;
+}
+.synth-table .top-row td:first-child {
+  border-right: 2px solid #2d3748;
+  font-weight: 700; color: #e53e3e;
+}
+
+@media (max-width: 600px) {
+  header h1 { font-size: 1.6em; }
+  .problem { padding: 20px; }
+  .choices { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<a href="index.html" class="home-link">← 홈으로 돌아가기</a>
+
+<header>
+  <h1>2024 1학기 중간고사 풀이</h1>
+  <p>고1 수학 | 서울원아이티메이션고등학교 | 선다형 1~6번</p>
+</header>
+
+<div class="nav">
+  <h3>문제 바로가기</h3>
+  <ul>
+    <li><a href="#q1">1번 다항식 계산</a></li>
+    <li><a href="#q2">2번 다항식 나눗셈</a></li>
+    <li><a href="#q3">3번 세제곱 전개</a></li>
+    <li><a href="#q4">4번 곱셈공식 활용</a></li>
+    <li><a href="#q5">5번 항등식</a></li>
+    <li><a href="#q6">6번 조립제법</a></li>
+  </ul>
+</div>
+
+<!-- ========== 1번 ========== -->
+<div class="problem" id="q1">
+  <div class="problem-header">
+    <div class="problem-num">1</div>
+    <div class="problem-title">다항식의 덧셈과 뺄셈</div>
+    <div class="problem-score">4.2점</div>
+  </div>
+
+  <div class="question-box">
+    두 다항식 $A = -x^2 + 4xy - 3y^2$, $B = 2x^2 + 5xy - 4y^2$에 대하여<br>
+    $(2A - B) - (A - 2B)$를 계산하면?
+  </div>
+
+  <div class="choices">
+    <div class="choice">① $x^2 + 2xy + 7y^2$</div>
+    <div class="choice correct">② $x^2 + 9xy - 7y^2$</div>
+    <div class="choice">③ $3x^2 + xy - y^2$</div>
+    <div class="choice">④ $-3x^2 - xy + y^2$</div>
+    <div class="choice">⑤ $3x^2 - 2xy + y^2$</div>
+  </div>
+
+  <div class="concept">
+    <h4>필요한 개념: 다항식의 정리</h4>
+    <p>복잡한 식은 <strong>괄호부터 풀어서 정리</strong>하는 게 핵심이야!</p>
+    <div class="formula">
+      $(2A - B) - (A - 2B)$처럼 문자가 섞여 있으면,<br>
+      먼저 <strong>괄호를 풀고 → A, B를 정리</strong>한 다음 → 대입!
+    </div>
+    <ul>
+      <li>괄호 앞에 <strong>마이너스(-)</strong>가 있으면 괄호 안 부호가 <strong>전부 반대로</strong> 바뀐다</li>
+      <li>같은 종류의 항(동류항)끼리 모아서 계산한다</li>
+    </ul>
+  </div>
+
+  <div class="solution">
+    <h4>풀이 과정</h4>
+    <div class="step">
+      <div class="step-label">STEP 1. 괄호를 먼저 정리하자</div>
+      $(2A - B) - (A - 2B)$<br>
+      $= 2A - B - A + 2B$<br>
+      $= A + B$<br><br>
+      놀랍게도 복잡해 보이는 식이 <strong>그냥 A + B</strong>가 돼!
+    </div>
+    <div class="step">
+      <div class="step-label">STEP 2. A + B를 계산하자</div>
+      $A + B = (-x^2 + 4xy - 3y^2) + (2x^2 + 5xy - 4y^2)$<br><br>
+      동류항끼리 모으면:<br>
+      • $x^2$ 항: $-1 + 2 = 1$ → $x^2$<br>
+      • $xy$ 항: $4 + 5 = 9$ → $9xy$<br>
+      • $y^2$ 항: $-3 + (-4) = -7$ → $-7y^2$
+    </div>
+    <div class="answer-box">정답: ② $x^2 + 9xy - 7y^2$</div>
+    <div class="tip">
+      <strong>꿀팁!</strong> 이런 문제는 A, B를 바로 대입하기 전에 <strong>문자 정리를 먼저</strong> 하면 계산이 훨씬 간단해져. 이 문제도 정리하니까 A+B 한 번만 계산하면 끝!
+    </div>
+  </div>
+</div>
+
+<!-- ========== 2번 ========== -->
+<div class="problem" id="q2">
+  <div class="problem-header">
+    <div class="problem-num">2</div>
+    <div class="problem-title">다항식의 나눗셈</div>
+    <div class="problem-score">4.2점</div>
+  </div>
+
+  <div class="question-box">
+    다음 나눗셈의 몫을 $Q(x)$, 나머지를 $R(x)$라 할 때, $Q(1) + R(1)$의 값은?<br><br>
+    $(4x^3 + 2x^2 - 5x + 3) \div (x^2 - 2x + 3)$
+  </div>
+
+  <div class="choices">
+    <div class="choice correct">① $-10$</div>
+    <div class="choice">② $-5$</div>
+    <div class="choice">③ $0$</div>
+    <div class="choice">④ $5$</div>
+    <div class="choice">⑤ $10$</div>
+  </div>
+
+  <div class="concept">
+    <h4>필요한 개념: 다항식의 나눗셈 (긴 나눗셈)</h4>
+    <p>숫자의 긴 나눗셈이랑 원리가 똑같아! "나누고 → 곱하고 → 빼고"를 반복하면 돼.</p>
+    <div class="formula">
+      (피제식) = (제수) × Q(x) + R(x)<br>
+      나머지 R(x)의 차수는 제수의 차수보다 <strong>항상 낮아야</strong> 한다
+    </div>
+    <ul>
+      <li>제수가 2차식이면 → 나머지는 <strong>1차 이하</strong> (ax + b 형태)</li>
+      <li>최고차항끼리 나눠서 몫의 각 항을 구한다</li>
+    </ul>
+  </div>
+
+  <div class="solution">
+    <h4>풀이 과정</h4>
+    <div class="step">
+      <div class="step-label">STEP 1. 최고차항 나누기</div>
+      $4x^3 \div x^2 = 4x$ ← 몫의 첫째 항<br><br>
+      $4x \times (x^2 - 2x + 3) = 4x^3 - 8x^2 + 12x$<br><br>
+      빼기: $(4x^3 + 2x^2 - 5x + 3) - (4x^3 - 8x^2 + 12x)$<br>
+      $= 10x^2 - 17x + 3$
+    </div>
+    <div class="step">
+      <div class="step-label">STEP 2. 한 번 더 나누기</div>
+      $10x^2 \div x^2 = 10$ ← 몫의 둘째 항<br><br>
+      $10 \times (x^2 - 2x + 3) = 10x^2 - 20x + 30$<br><br>
+      빼기: $(10x^2 - 17x + 3) - (10x^2 - 20x + 30)$<br>
+      $= 3x - 27$ ← 이것이 나머지!
+    </div>
+    <div class="step">
+      <div class="step-label">STEP 3. Q(1) + R(1) 구하기</div>
+      $Q(x) = 4x + 10$ → $Q(1) = 4(1) + 10 = 14$<br>
+      $R(x) = 3x - 27$ → $R(1) = 3(1) - 27 = -24$<br><br>
+      $Q(1) + R(1) = 14 + (-24) = -10$
+    </div>
+    <div class="answer-box">정답: ① $-10$</div>
+    <div class="tip">
+      <strong>검산법!</strong> (피제식) = (제수) × Q(x) + R(x)에 x=1을 넣으면:<br>
+      좌변: $4 + 2 - 5 + 3 = 4$<br>
+      우변: $(1 - 2 + 3)(Q(1)) + R(1) = 2 \times 14 + (-24) = 4$ ✓ 맞다!
+    </div>
+  </div>
+</div>
+
+<!-- ========== 3번 ========== -->
+<div class="problem" id="q3">
+  <div class="problem-header">
+    <div class="problem-num">3</div>
+    <div class="problem-title">세제곱의 전개</div>
+    <div class="problem-score">4.2점</div>
+  </div>
+
+  <div class="question-box">
+    $(x - 2y)^3$을 전개한 것으로 옳은 것은?
+  </div>
+
+  <div class="choices">
+    <div class="choice">① $x^3 - 12x^2y + 6xy^2 - 8y^3$</div>
+    <div class="choice">② $x^3 + 6x^2y - 12xy^2 - 8y^3$</div>
+    <div class="choice">③ $x^3 - 6x^2y - 12xy^2 - 8y^3$</div>
+    <div class="choice">④ $x^3 + 12x^2y - 6xy^2 - 8y^3$</div>
+    <div class="choice correct">⑤ $x^3 - 6x^2y + 12xy^2 - 8y^3$</div>
+  </div>
+
+  <div class="concept">
+    <h4>필요한 개념: 세제곱 전개 공식</h4>
+    <p>이 공식은 반드시 외워야 해! 부호 패턴을 기억하면 쉬워.</p>
+    <div class="formula">
+      $(a + b)^3 = a^3 + 3a^2b + 3ab^2 + b^3$<br><br>
+      $(a - b)^3 = a^3 - 3a^2b + 3ab^2 - b^3$
+    </div>
+    <ul>
+      <li><strong>$(a-b)^3$</strong>의 부호 패턴: <strong>+ − + −</strong> (번갈아 나온다!)</li>
+      <li>계수는 <strong>1, 3, 3, 1</strong> (파스칼의 삼각형 3번째 줄)</li>
+      <li>$a$의 차수는 3→2→1→0으로 내려가고, $b$의 차수는 0→1→2→3으로 올라간다</li>
+    </ul>
+  </div>
+
+  <div class="solution">
+    <h4>풀이 과정</h4>
+    <div class="step">
+      <div class="step-label">STEP 1. 공식에 대입하기</div>
+      $(x - 2y)^3$에서 $a = x$, $b = 2y$로 놓으면:<br><br>
+      $(a - b)^3 = a^3 - 3a^2b + 3ab^2 - b^3$
+    </div>
+    <div class="step">
+      <div class="step-label">STEP 2. 각 항 계산하기</div>
+      • $a^3 = x^3$<br>
+      • $3a^2b = 3 \cdot x^2 \cdot 2y = 6x^2y$<br>
+      • $3ab^2 = 3 \cdot x \cdot (2y)^2 = 3 \cdot x \cdot 4y^2 = 12xy^2$<br>
+      • $b^3 = (2y)^3 = 8y^3$
+    </div>
+    <div class="step">
+      <div class="step-label">STEP 3. 부호 붙여서 합치기</div>
+      $x^3 \textcolor{red}{-}\ 6x^2y \textcolor{red}{+}\ 12xy^2 \textcolor{red}{-}\ 8y^3$<br><br>
+      부호가 <strong>+ − + −</strong>로 번갈아 나오는 걸 확인!
+    </div>
+    <div class="answer-box">정답: ⑤ $x^3 - 6x^2y + 12xy^2 - 8y^3$</div>
+    <div class="tip">
+      <strong>흔한 실수!</strong> $(2y)^2 = 4y^2$인데 $2y^2$으로 계산하는 경우가 많아. <strong>괄호 안 전체를 제곱</strong>해야 해! $(2y)^2 = 2^2 \cdot y^2 = 4y^2$
+    </div>
+  </div>
+</div>
+
+<!-- ========== 4번 ========== -->
+<div class="problem" id="q4">
+  <div class="problem-header">
+    <div class="problem-num">4</div>
+    <div class="problem-title">곱셈공식의 변형 활용</div>
+    <div class="problem-score">4.4점</div>
+  </div>
+
+  <div class="question-box">
+    $x - y = 2$, $xy = -2$일 때, $x^3 - y^3$의 값은?
+  </div>
+
+  <div class="choices">
+    <div class="choice">① $-10$</div>
+    <div class="choice">② $-8$</div>
+    <div class="choice">③ $-6$</div>
+    <div class="choice correct">④ $-4$</div>
+    <div class="choice">⑤ $0$</div>
+  </div>
+
+  <div class="concept">
+    <h4>필요한 개념: 곱셈공식의 변형</h4>
+    <p>$x, y$ 각각의 값을 모르더라도, $x-y$와 $xy$만 알면 $x^3 - y^3$을 구할 수 있어!</p>
+    <div class="formula">
+      $x^3 - y^3 = (x - y)(x^2 + xy + y^2)$
+    </div>
+    <p>그런데 $x^2 + xy + y^2$을 어떻게 구할까? 이렇게 변형해!</p>
+    <div class="formula">
+      $x^2 + y^2 = (x - y)^2 + 2xy$<br><br>
+      따라서 $x^2 + xy + y^2 = (x-y)^2 + 2xy + xy = (x-y)^2 + 3xy$
+    </div>
+  </div>
+
+  <div class="solution">
+    <h4>풀이 과정</h4>
+    <div class="step">
+      <div class="step-label">STEP 1. 인수분해 공식 적용</div>
+      $x^3 - y^3 = (x - y)(x^2 + xy + y^2)$
+    </div>
+    <div class="step">
+      <div class="step-label">STEP 2. $x^2 + xy + y^2$를 알고 있는 값으로 바꾸기</div>
+      $x^2 + xy + y^2 = (x-y)^2 + 3xy$<br><br>
+      이유: $x^2 + xy + y^2$<br>
+      $= (x^2 - 2xy + y^2) + 3xy$<br>
+      $= (x - y)^2 + 3xy$
+    </div>
+    <div class="step">
+      <div class="step-label">STEP 3. 값 대입</div>
+      $x - y = 2$, $xy = -2$이므로:<br><br>
+      $(x-y)^2 + 3xy = 2^2 + 3 \times (-2) = 4 - 6 = -2$<br><br>
+      $x^3 - y^3 = (x-y) \times \{(x-y)^2 + 3xy\}$<br>
+      $= 2 \times (-2) = -4$
+    </div>
+    <div class="answer-box">정답: ④ $-4$</div>
+    <div class="tip">
+      <strong>핵심 공식 모음!</strong> 이 유형에서 자주 쓰는 변형이야:<br>
+      • $x^2 + y^2 = (x+y)^2 - 2xy = (x-y)^2 + 2xy$<br>
+      • $x^3 + y^3 = (x+y)^3 - 3xy(x+y)$<br>
+      • $x^3 - y^3 = (x-y)^3 + 3xy(x-y)$<br>
+      주어진 조건에 맞는 공식을 골라 쓰면 돼!
+    </div>
+  </div>
+</div>
+
+<!-- ========== 5번 ========== -->
+<div class="problem" id="q5">
+  <div class="problem-header">
+    <div class="problem-num">5</div>
+    <div class="problem-title">항등식</div>
+    <div class="problem-score">4.2점</div>
+  </div>
+
+  <div class="question-box">
+    모든 실수 $x$에 대하여<br>
+    $(2a - b)x^2 + (2 - b)x + (c + 3) = 0$이 성립할 때, 실수 $a, b, c$에 대하여 $a + b + c$의 값은?
+  </div>
+
+  <div class="choices">
+    <div class="choice">① $-2$</div>
+    <div class="choice">② $-1$</div>
+    <div class="choice correct">③ $0$</div>
+    <div class="choice">④ $1$</div>
+    <div class="choice">⑤ $2$</div>
+  </div>
+
+  <div class="concept">
+    <h4>필요한 개념: 항등식의 성질</h4>
+    <p>"<strong>모든</strong> 실수 $x$에 대하여 = 0"이라는 말은 아주 강력한 조건이야!</p>
+    <div class="formula">
+      "모든 $x$에 대해 $ax^2 + bx + c = 0$" 이면<br>
+      → <strong>모든 계수가 0</strong>이어야 한다<br>
+      → $a = 0$, $b = 0$, $c = 0$
+    </div>
+    <ul>
+      <li>$x = 1$일 때도 0, $x = 100$일 때도 0, $x = -5$일 때도 0... 모든 $x$에서 0이 되려면 <strong>계수 자체가 전부 0</strong>이어야 해</li>
+      <li>만약 계수가 하나라도 0이 아니면, 어떤 $x$에서는 0이 안 되는 값이 나올 수 있거든!</li>
+    </ul>
+  </div>
+
+  <div class="solution">
+    <h4>풀이 과정</h4>
+    <div class="step">
+      <div class="step-label">STEP 1. 각 계수를 0으로 놓기</div>
+      모든 $x$에 대해 성립하므로 각 차수의 계수가 모두 0:<br><br>
+      • $x^2$의 계수: $2a - b = 0$ &nbsp; ···①<br>
+      • $x$의 계수: $2 - b = 0$ &nbsp; ···②<br>
+      • 상수항: $c + 3 = 0$ &nbsp; ···③
+    </div>
+    <div class="step">
+      <div class="step-label">STEP 2. 연립방정식 풀기</div>
+      ②에서: $b = 2$<br>
+      ③에서: $c = -3$<br>
+      ①에 $b = 2$ 대입: $2a - 2 = 0$ → $a = 1$
+    </div>
+    <div class="step">
+      <div class="step-label">STEP 3. a + b + c 구하기</div>
+      $a + b + c = 1 + 2 + (-3) = 0$
+    </div>
+    <div class="answer-box">정답: ③ $0$</div>
+    <div class="tip">
+      <strong>"모든 x에 대하여"가 보이면?</strong> 반사적으로 <strong>"계수 = 0"</strong>을 떠올리자! 이건 항등식 문제에서 가장 기본이 되는 핵심 원리야.
+    </div>
+  </div>
+</div>
+
+<!-- ========== 6번 ========== -->
+<div class="problem" id="q6">
+  <div class="problem-header">
+    <div class="problem-num">6</div>
+    <div class="problem-title">조립제법</div>
+    <div class="problem-score">4.3점</div>
+  </div>
+
+  <div class="question-box">
+    조립제법을 이용하여 다항식 $2x^3 - x^2 - 3x + 5$를 $x + 2$로 나누어 몫과 나머지를 구하는 과정이다. 다음 중 옳지 <strong>않은</strong> 것은?<br><br>
+    <table class="synth-table">
+      <tr class="top-row"><td>$a$</td><td>$2$</td><td>$-1$</td><td>$-3$</td><td>$5$</td></tr>
+      <tr class="divider"><td></td><td></td><td>$b$</td><td>$c$</td><td>$-14$</td></tr>
+      <tr><td></td><td>$2$</td><td>$-5$</td><td>$d$</td><td>$e$</td></tr>
+    </table>
+  </div>
+
+  <div class="choices">
+    <div class="choice">① $a = -2$</div>
+    <div class="choice">② $b = -4$</div>
+    <div class="choice">③ $c = 10$</div>
+    <div class="choice">④ $d = 7$</div>
+    <div class="choice correct">⑤ $e = 19$ (틀림! 실제로는 $e = -9$)</div>
+  </div>
+
+  <div class="concept">
+    <h4>필요한 개념: 조립제법이란?</h4>
+    <p>다항식을 <strong>$(x - k)$ 꼴의 일차식</strong>으로 나눌 때 쓰는 빠른 계산법이야!</p>
+    <div class="formula">
+      $x + 2$로 나눈다 → $x - (-2)$로 나누는 것<br>
+      → 조립제법에서 쓰는 수: $a = -2$
+    </div>
+    <p><strong>조립제법 진행 방식:</strong></p>
+    <ul>
+      <li>① 피제식의 계수들을 한 줄로 적는다</li>
+      <li>② 첫 번째 계수를 그대로 내린다</li>
+      <li>③ 내린 수 × $a$ = 다음 칸 위에 적기</li>
+      <li>④ 위아래를 더하기 → 다시 내린다</li>
+      <li>⑤ ③~④를 반복! 마지막 수가 <strong>나머지</strong></li>
+    </ul>
+  </div>
+
+  <div class="solution">
+    <h4>풀이 과정</h4>
+    <div class="step">
+      <div class="step-label">STEP 1. a 구하기</div>
+      $x + 2 = x - (-2)$이므로<br>
+      $a = -2$ ✅ (① 맞음)
+    </div>
+    <div class="step">
+      <div class="step-label">STEP 2. 조립제법 한 칸씩 계산하기</div>
+      <table class="synth-table">
+        <tr class="top-row"><td>$-2$</td><td>$2$</td><td>$-1$</td><td>$-3$</td><td>$5$</td></tr>
+        <tr class="divider"><td></td><td></td><td>$-4$</td><td>$10$</td><td>$-14$</td></tr>
+        <tr><td></td><td>$2$</td><td>$-5$</td><td>$7$</td><td>$-9$</td></tr>
+      </table>
+      <br>
+      <strong>하나씩 따라가 보자:</strong><br><br>
+      • $2$를 그대로 내린다 → 결과줄 첫 칸 = $2$<br>
+      • $2 \times (-2) = -4$ → $b = -4$ ✅ (② 맞음)<br>
+      • $-1 + (-4) = -5$ ✅<br>
+      • $-5 \times (-2) = 10$ → $c = 10$ ✅ (③ 맞음)<br>
+      • $-3 + 10 = 7$ → $d = 7$ ✅ (④ 맞음)<br>
+      • $7 \times (-2) = -14$ ✅ (문제에 적힌 $-14$과 일치)<br>
+      • $5 + (-14) = -9$ → $e = -9$ ❌ (⑤는 $e = 19$라고 했으니 <strong>틀림!</strong>)
+    </div>
+    <div class="step">
+      <div class="step-label">STEP 3. 결과 확인</div>
+      <strong>몫:</strong> $2x^2 - 5x + 7$<br>
+      <strong>나머지:</strong> $-9$<br><br>
+      즉, $2x^3 - x^2 - 3x + 5 = (x + 2)(2x^2 - 5x + 7) - 9$
+    </div>
+    <div class="answer-box">정답: ⑤ $e = 19$ (옳지 않다 — 실제로 $e = -9$)</div>
+    <div class="tip">
+      <strong>조립제법 실수 방지!</strong><br>
+      • "$x + 2$로 나눈다"면 조립제법에는 <strong>$-2$</strong>를 넣어야 해 (부호 반대!)<br>
+      • 곱하기와 더하기를 헷갈리지 말 것: <strong>대각선은 곱하기</strong>, <strong>세로는 더하기</strong>!
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>
